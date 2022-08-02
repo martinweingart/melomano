@@ -1,0 +1,31 @@
+{
+  "name": "melomano",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --ignore ./webapp ./src/serve.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "scan": "node ./src/scan.js"
+  },
+  "keywords": [
+    "music",
+    "stream"
+  ],
+  "author": "Martin Weingart",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "joi": "^17.6.0",
+    "lokijs": "^1.5.12",
+    "mime-types": "^2.1.35",
+    "music-metadata": "^7.12.4"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1",
+    "sass": "^1.54.0"
+  }
+}
