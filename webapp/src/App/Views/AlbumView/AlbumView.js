@@ -40,10 +40,10 @@ export const AlbumView = function () {
 
       {album && (
         <Fragment>
-          <AlbumHeader className="AlbumView-header" {...album} />
+          <AlbumHeader className="header" {...album} />
           <Divider />
           <Tracklist
-            className="AlbumView-tracklist"
+            className="list"
             tracks={album.tracks}
             onAddToPlaylist={(track) => {
               setIsPlaylistModalOpen(true);

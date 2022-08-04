@@ -61,16 +61,12 @@ export const GenreView = function () {
             onSave={onSave}
           />
 
-          <AvatarHeader
-            className="GenreView-header"
-            type="genre"
-            name={genre.name}
-          />
+          <AvatarHeader className="header" type="genre" name={genre.name} />
 
           <Divider />
 
           <ListRender
-            className="GenreView-albums"
+            className="list"
             list={genre.albums}
             type="box"
             title="name"

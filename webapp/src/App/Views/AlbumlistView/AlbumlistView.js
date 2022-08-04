@@ -28,7 +28,7 @@ export const AlbumlistView = function () {
       {albumlist && (
         <Fragment>
           <AvatarHeader
-            className="AlbumlistView-header"
+            className="header"
             type="albumlist"
             name={albumlist.name}
             onRemove={onRemove}
@@ -37,7 +37,7 @@ export const AlbumlistView = function () {
           <Divider />
 
           <ListRender
-            className="AlbumlistView-albums"
+            className="list"
             list={albumlist.albums}
             type="box"
             title="name"

@@ -1,13 +1,12 @@
 import "./HomeView.scss";
 import { Fragment, useEffect, useState, useContext, useRef } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AlbumHeader, ListRender, AddListModal } from "../../../Components";
 import * as api from "../../../Services/api";
 import { ContextPlayer } from "../../../Context/ContextPlayer";
 
 export const HomeView = function () {
   const navigate = useNavigate();
-  const params = useParams();
   const { addTracksAndPlay } = useContext(ContextPlayer);
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
   const [modalType, setModalType] = useState("playlist");

@@ -22,14 +22,10 @@ export const ArtistView = function () {
     <div className="ArtistView">
       {artist && (
         <Fragment>
-          <AvatarHeader
-            className="ArtistView-header"
-            type="artist"
-            name={artist.name}
-          />
+          <AvatarHeader className="header" type="artist" name={artist.name} />
           <Divider />
           <ListRender
-            className="ArtistView-albums"
+            className="list"
             list={artist.albums}
             type="box"
             title="name"

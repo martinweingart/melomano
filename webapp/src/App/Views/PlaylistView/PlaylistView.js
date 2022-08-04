@@ -39,14 +39,14 @@ export const PlaylistView = function () {
       {playlist && (
         <Fragment>
           <AvatarHeader
-            className="PlaylistView-header"
+            className="header"
             type="playlist"
             name={playlist.name}
             onRemove={onRemove}
           />
           <Divider />
           <Tracklist
-            className="PlaylistView-tracklist"
+            className="tracklist"
             tracks={playlist.tracks}
             onRemove={onRemoveTrack}
           />

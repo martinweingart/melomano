@@ -1,17 +1,5 @@
+@import "../../../styles/Mixins/ItemView.scss";
+
 .AlbumlistView {
-  padding: 12px 0;
-  height: 100%;
-  box-sizing: border-box;
-  display: grid;
-  grid-template-rows: auto auto 1fr;
-  gap: 12px;
-
-  .AlbumlistView-header {
-    padding: 0 12px;
-  }
-
-  .AlbumlistView-albums {
-    padding: 0 12px;
-    overflow: auto;
-  }
+  @include itemView;
 }
