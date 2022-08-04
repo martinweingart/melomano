@@ -1,11 +1,11 @@
-@import "../../../styles/colors.scss";
+@import "../../../Styles/colors.scss";
 
 .IconButton {
   -webkit-tap-highlight-color: transparent;
   background-color: transparent;
   border: 0;
   border-radius: 50%;
-  color: #3f5c78;
+  color: $colors-main-dark;
   padding: 8px;
   display: flex;
   justify-content: center;
@@ -18,7 +18,7 @@
   }
 
   &.isDark {
-    color: #ecf0f1;
+    color: $colors-main-light;
   }
 
   @media (hover: none) {
@@ -27,40 +27,28 @@
     }
 
     &:active {
-      background-color: rgba(211, 216, 221, 1);
+      background-color: $colors-light-active;
 
       &.isDark {
-        background-color: rgba(26, 36, 46, 1);
-      }
-
-      &.withLabel {
-        background-color: rgba(211, 216, 221, 0.3);
+        background-color: $colors-dark-active;
       }
     }
   }
 
   @media (hover: hover) {
     &:hover {
-      background-color: rgba(211, 216, 221, 0.6);
+      background-color: $colors-light-hover;
 
       &.isDark {
-        background-color: rgba(26, 36, 46, 0.6);
-      }
-
-      &.withLabel {
-        background-color: rgba(211, 216, 221, 0.15);
+        background-color: $colors-dark-hover;
       }
     }
 
     &:active {
-      background-color: rgba(211, 216, 221, 1);
+      background-color: $colors-light-active;
 
       &.isDark {
-        background-color: rgba(26, 36, 46, 1);
-      }
-
-      &.withLabel {
-        background-color: rgba(211, 216, 221, 0.3);
+        background-color: $colors-dark-active;
       }
     }
   }

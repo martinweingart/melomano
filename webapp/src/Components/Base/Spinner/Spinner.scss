@@ -1,3 +1,5 @@
+@import "../../../Styles/colors.scss";
+
 @keyframes spinner {
   0% {
     transform: rotate(0deg);
@@ -13,8 +15,8 @@
   align-items: center;
 
   .Spinner-loading {
-    border: 2px solid #f3f3f3;
-    border-top: 2px solid #383636;
+    border: 2px solid $colors-main-light;
+    border-top: 2px solid $colors-main-dark;
     border-radius: 50%;
     animation: spinner 0.5s linear infinite;
   }

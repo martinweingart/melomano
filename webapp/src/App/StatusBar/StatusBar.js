@@ -2,7 +2,6 @@ import "./StatusBar.scss";
 import { Fragment, useContext } from "react";
 import clsx from "clsx";
 import { ContextPlayer } from "../../Context/ContextPlayer";
-import Colors from "../../styles/colors";
 import { getDuration } from "../../Helpers";
 
 export function StatusBar() {
@@ -15,7 +14,7 @@ export function StatusBar() {
 
   const style = currentTrack
     ? {
-        background: `linear-gradient(to left, rgba(0, 0, 0, 0) ${porcentage}%, ${Colors.bgSecondary} ${porcentage}%)`,
+        background: `linear-gradient(to left, rgba(0, 0, 0, 0) ${porcentage}%, #97aabd ${porcentage}%)`,
       }
     : {};
 

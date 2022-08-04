@@ -1,5 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "../../../Hooks/useQuery";
 import { ContextPlayer } from "../../../Context/ContextPlayer";
 import {
   getPlaylists,
@@ -11,16 +12,7 @@ import { ListView } from "../ListView/ListView";
 export const PlaylistsView = function () {
   const navigate = useNavigate();
   const { addTracksAndPlay } = useContext(ContextPlayer);
-  const [list, setList] = useState([]);
-
-  useEffect(() => {
-    const getList = async () => {
-      const list = await getPlaylists();
-      setList(list);
-    };
-
-    getList();
-  }, []);
+  const { loading, error, data, forceRefresh } = useQuery(getPlaylists);
 
   const onPlay = async (name) => {
     const tracks = await getTracksByPlaylist(name);
@@ -29,17 +21,17 @@ export const PlaylistsView = function () {
 
   const onRemove = async (name) => {
     await removePlaylist(name);
-    const list = await getPlaylists();
-    setList(list);
+    forceRefresh();
   };
 
   return (
     <ListView
-      list={list}
+      loading={loading}
+      list={data}
       type="avatar"
       title="name"
       id="name"
-      onClick={(playlist) => navigate(`/playlist/${playlist.name}`)}
+      onOpen={(name) => navigate(`/playlist/${name}`)}
       onPlay={onPlay}
       onRemove={onRemove}
     />

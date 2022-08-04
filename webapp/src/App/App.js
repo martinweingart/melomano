@@ -1,6 +1,6 @@
 import "./App.scss";
 import { useState } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import { TopBar } from "./TopBar/TopBar";
 import { StatusBar } from "./StatusBar/StatusBar";
 import { Controls } from "./Controls/Controls";
@@ -22,6 +22,7 @@ import {
 import { ContextPlayerProvider } from "../Context/ContextPlayer";
 
 function App() {
+  const navigate = useNavigate();
   const [isDrawerMainOpen, setIsDrawerMainOpen] = useState(false);
   const [isDrawerQueueOpen, setIsDrawerQueueOpen] = useState(false);
 
@@ -39,7 +40,10 @@ function App() {
         />
 
         <div className="App-content">
-          <TopBar onMenuClick={() => setIsDrawerMainOpen(true)} />
+          <TopBar
+            onMenu={() => setIsDrawerMainOpen(true)}
+            onBack={() => navigate(-1)}
+          />
 
           <div className="Main">
             <Routes>

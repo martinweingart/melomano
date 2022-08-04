@@ -1,10 +1,15 @@
 import "./TopBar.scss";
 import { MenuButton } from "./MenuButton/MenuButton";
+import { BackButton } from "./BackButton/BackButton";
+import { useLocation } from "react-router-dom";
 
-export function TopBar({ onMenuClick }) {
+export function TopBar({ onMenu, onBack }) {
+  const location = useLocation();
+
   return (
     <div className="TopBar">
-      <MenuButton onClick={onMenuClick} />
+      <MenuButton onClick={onMenu} />
+      {location.key !== "default" && <BackButton onClick={onBack} />}
     </div>
   );
 }

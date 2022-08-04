@@ -1,6 +1,7 @@
 import "./ListRenderItem.scss";
 import clsx from "clsx";
 import {
+  MdArrowForward,
   MdOutlinePlayCircleOutline,
   MdPlaylistAdd,
   MdAlbum,
@@ -15,7 +16,7 @@ export function ListRenderItem({
   title,
   subtitle,
   image,
-  onClick,
+  onOpen,
   onPlay,
   onAddToPlaylist,
   onAddToAlbumlist,
@@ -26,18 +27,24 @@ export function ListRenderItem({
   return (
     <li className={clsx("ListRenderItem", { isAvatar })}>
       {isAvatar ? (
-        <Avatar name={title} onClick={onClick} />
+        <Avatar name={title} />
       ) : (
-        <img src={image || noAlbum} alt={title} onClick={onClick} />
+        <img src={image || noAlbum} alt={title} />
       )}
 
       <div className="ListRenderItem-content">
-        <div className="ListRenderItem-info" onClick={onClick}>
+        <div className="ListRenderItem-info">
           <span className="ListRenderItem-title">{title}</span>
           <span className="ListRenderItem-subtitle">{subtitle}</span>
         </div>
 
         <div className="ListRenderItem-controls">
+          {onOpen && (
+            <IconButton size={16} onClick={() => onOpen(id)}>
+              <MdArrowForward />
+            </IconButton>
+          )}
+
           {onPlay && (
             <IconButton size={16} onClick={() => onPlay(id)}>
               <MdOutlinePlayCircleOutline />

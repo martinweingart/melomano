@@ -72,7 +72,7 @@ export const GenreView = function () {
             title="name"
             subtitle="artist"
             id="id"
-            onClick={(album) => navigate(`/album/${album.id}`)}
+            onOpen={(id) => navigate(`/album/${id}`)}
             onPlay={onPlay}
             onAddToPlaylist={(id) => onOpenListModal("playlist", id)}
             onAddToAlbumlist={(id) => onOpenListModal("albumlist", id)}

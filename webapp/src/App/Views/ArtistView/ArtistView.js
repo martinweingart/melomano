@@ -31,7 +31,7 @@ export const ArtistView = function () {
             title="name"
             subtitle="year"
             id="id"
-            onClick={(album) => navigate(`/album/${album.id}`)}
+            onOpen={(id) => navigate(`/album/${id}`)}
           />
         </Fragment>
       )}

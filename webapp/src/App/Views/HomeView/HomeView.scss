@@ -1,4 +1,4 @@
-@import "../../../styles/colors.scss";
+@import "../../../Styles/colors.scss";
 
 .HomeView {
   height: 100%;
@@ -10,7 +10,7 @@
 
   .HomeView-header {
     padding: 12px;
-    border: 1px solid #d6dcdd;
+    border: 1px solid $colors-border-light;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -35,7 +35,7 @@
       margin: 0 12px;
       font-weight: 500;
       font-size: 18px;
-      border-bottom: 1px solid #d6dcdd;
+      border-bottom: 1px solid $colors-border-light;
     }
 
     .HomeView-recent-list {

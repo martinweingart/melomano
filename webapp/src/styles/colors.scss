@@ -1,25 +1,40 @@
-$colors-neutral: #ecf0f1;
-$colors-bg: #2c3e50;
-$colors-bgActive: #232f3a;
-$colors-bgSecondary: #bdc3c7;
+$colors-main-light: #f2f2f2;
+$colors-main-dark: #3f5c78;
 
-$colors-bgHover: rgba(
-  $color: #bdc3c7,
-  $alpha: 0.2,
+$colors-bg-light-1: #fafafa;
+$colors-bg-light-2: #e5e5e5;
+$colors-bg-dark-1: #2c3e50;
+$colors-bg-dark-3: #97aabd;
+
+$colors-border-light: #f2f2f2;
+$colors-border-light-2: #f2f2f2;
+$colors-border-dark: #1a1a1a;
+
+$colors-light-hover: rgba(
+  $color: $colors-bg-light-2,
+  $alpha: 0.4,
+);
+$colors-light-active: $colors-bg-light-2;
+
+$colors-dark-hover: rgba(
+  $color: $colors-bg-light-2,
+  $alpha: 0.4,
+);
+$colors-dark-active: #1a242e;
+$colors-dark-hover: rgba(
+  $color: $colors-dark-active,
+  $alpha: 0.4,
 );
 
-$colors-bgActive: rgba(
-  $color: #bdc3c7,
-  $alpha: 0.5,
-);
-
-$colors-inputBorder: #97aabd;
-$colors-inputBorderActive: #0d2332;
+$colors-drawer-selected: #5dbfff;
+$colors-drawer-selected-bg: #0d2332;
+$colors-drawer-hover: #30729d;
+$colors-drawer-hover-bg: #163042;
 
 $colors-button: #3f5466;
-$colors-buttonDisabled: #c7ccd1;
-$colors-buttonActive: #2e4050;
-$colors-buttonHover: rgba(
+$colors-button-disabled: #c7ccd1;
+$colors-button-active: #2e4050;
+$colors-button-hover: rgba(
   $color: #2e4050,
   $alpha: 0.5,
 );

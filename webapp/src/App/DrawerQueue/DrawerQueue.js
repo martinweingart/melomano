@@ -32,7 +32,7 @@ export const DrawerQueue = function ({ isOpen, onClose }) {
           <Fragment>
             <h3>Now Playing</h3>
 
-            {queue.length === 0 && <span>Nothing here...</span>}
+            {queue.length === 0 && <span>The queue is empty</span>}
 
             {queue.length > 0 && (
               <ul className="DrawerQueue-tracklist">

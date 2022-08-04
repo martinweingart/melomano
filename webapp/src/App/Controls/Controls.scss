@@ -1,11 +1,11 @@
-@import "../../styles/colors.scss";
+@import "../../Styles/colors.scss";
 
 .Controls {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 8px;
-  background-color: $colors-bg;
+  background-color: $colors-bg-dark-1;
 
   > div {
     display: flex;

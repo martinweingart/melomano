@@ -1,3 +1,5 @@
+@import "../../Styles/colors.scss";
+
 .SearchBar {
   width: 100%;
   display: flex;
@@ -6,7 +8,7 @@
   .icon {
     width: 40px;
     height: 40px;
-    color: #3f5c78;
+    color: $colors-main-dark;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -26,14 +28,14 @@
     line-height: 1.15;
     margin: 0;
     border: 0;
-    border-bottom: 1px solid #f1f1f1;
+    border-bottom: 1px solid $colors-border-light;
     outline: transparent solid 2px;
     outline-offset: 2px;
 
     &:focus-visible {
       z-index: 1;
-      border-color: #6f95bb;
-      box-shadow: #6f95bb 0px 0px 0px 1px;
+      border-color: $colors-bg-dark-3;
+      box-shadow: $colors-bg-dark-3 0px 0px 0px 1px;
     }
   }
 

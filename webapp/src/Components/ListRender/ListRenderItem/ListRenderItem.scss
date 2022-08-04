@@ -1,10 +1,12 @@
+@import "../../../Styles/colors.scss";
+
 .ListRenderItem {
   list-style: none;
   display: grid;
   grid-template-columns: 100px 1fr;
   padding: 12px;
   gap: 12px;
-  border-bottom: 0.5px solid #f1f1f1;
+  border-bottom: 0.5px solid $colors-border-light;
   box-sizing: border-box;
 
   > img {
@@ -31,7 +33,7 @@
       }
 
       .ListRenderItem-subtitle {
-        color: #4f5e7c;
+        color: $colors-main-dark;
         font-size: 85%;
       }
     }

@@ -3,6 +3,16 @@
   display: grid;
   grid-template-rows: 40px 1fr;
 
+  .empty,
+  .loading {
+    margin: 0;
+    grid-row: span 2;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+  }
+
   .ListView-list {
     overflow: auto;
   }

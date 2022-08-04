@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useState, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "../../../Hooks/useQuery";
 import { ContextPlayer } from "../../../Context/ContextPlayer";
 import {
   getArtists,
@@ -12,18 +13,10 @@ import { AddListModal } from "../../../Components";
 export const ArtistsView = function () {
   const navigate = useNavigate();
   const { addTracksAndPlay } = useContext(ContextPlayer);
-  const [list, setList] = useState([]);
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
   const refId = useRef();
 
-  useEffect(() => {
-    const getList = async () => {
-      const list = await getArtists();
-      setList(list);
-    };
-
-    getList();
-  }, []);
+  const { loading, error, data } = useQuery(getArtists);
 
   const onPlay = async (name) => {
     const tracks = await getTracksByArtist(name);
@@ -45,11 +38,12 @@ export const ArtistsView = function () {
         onSave={onAddToPlaylist}
       />
       <ListView
-        list={list}
+        loading={loading}
+        list={data}
         type="avatar"
         title="name"
         id="name"
-        onClick={(artist) => navigate(`/artist/${artist.name}`)}
+        onOpen={(name) => navigate(`/artist/${name}`)}
         onPlay={onPlay}
         onAddToPlaylist={(id) => {
           setIsPlaylistModalOpen(true);

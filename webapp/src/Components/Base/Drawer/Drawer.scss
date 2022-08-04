@@ -1,5 +1,7 @@
+@import "../../../Styles/colors.scss";
+
 .Drawer {
-  background: #fff;
+  background: $colors-bg-light-1;
   overflow: auto;
   position: fixed;
   z-index: 1000;

@@ -1,5 +1,6 @@
-import { Fragment, useEffect, useState, useContext, useRef } from "react";
+import { Fragment, useState, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "../../../Hooks/useQuery";
 import { ContextPlayer } from "../../../Context/ContextPlayer";
 import { ListView } from "../ListView/ListView";
 import { AddListModal } from "../../../Components";
@@ -15,16 +16,7 @@ export const AlbumsView = function () {
   const { addTracksAndPlay } = useContext(ContextPlayer);
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
   const [modalType, setModalType] = useState("playlist");
-  const [list, setList] = useState([]);
-
-  useEffect(() => {
-    const getList = async () => {
-      const list = await getAlbums();
-      setList(list);
-    };
-
-    getList();
-  }, []);
+  const { loading, error, data } = useQuery(getAlbums);
 
   const refId = useRef();
 
@@ -59,12 +51,13 @@ export const AlbumsView = function () {
       />
 
       <ListView
-        list={list}
+        loading={loading}
+        list={data}
         type="box"
         title="name"
         subtitle="artist"
         id="id"
-        onClick={(album) => navigate(`/album/${album.id}`)}
+        onOpen={(id) => navigate(`/album/${id}`)}
         onPlay={onPlay}
         onAddToPlaylist={(id) => onOpenListModal("playlist", id)}
         onAddToAlbumlist={(id) => onOpenListModal("albumlist", id)}

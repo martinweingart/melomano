@@ -16,6 +16,11 @@
       gap: 6px;
       align-items: center;
 
+      &:hover {
+        cursor: pointer;
+        font-weight: 600;
+      }
+
       .Tracklist-item-duration {
         text-align: right;
       }

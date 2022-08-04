@@ -62,7 +62,7 @@ export const HomeView = function () {
             <h4>Check this album!</h4>
             <AlbumHeader
               {...album}
-              onClick={() => navigate(`/album/${album.id}`)}
+              onOpen={() => navigate(`/album/${album.id}`)}
             />
           </div>
         )}
@@ -77,7 +77,7 @@ export const HomeView = function () {
             title="name"
             subtitle="artist"
             id="id"
-            onClick={(album) => navigate(`/album/${album.id}`)}
+            onOpen={(id) => navigate(`/album/${id}`)}
             onPlay={onPlay}
             onAddToPlaylist={(id) => onOpenListModal("playlist", id)}
             onAddToAlbumlist={(id) => onOpenListModal("albumlist", id)}

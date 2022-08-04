@@ -2,6 +2,7 @@ import "./AlbumHeader.scss";
 import { Fragment, useContext, useState } from "react";
 import clsx from "clsx";
 import {
+  MdArrowForward,
   MdOutlinePlayCircleOutline,
   MdPlaylistAdd,
   MdAlbum,
@@ -25,7 +26,7 @@ export const AlbumHeader = function ({
   year,
   genres,
   image,
-  onClick,
+  onOpen,
 }) {
   const { addTracksAndPlay } = useContext(ContextPlayer);
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
@@ -58,7 +59,7 @@ export const AlbumHeader = function ({
       />
 
       <div className={clsx("AlbumHeader", className)}>
-        <div className="AlbumHeader-content" onClick={onClick}>
+        <div className="AlbumHeader-content">
           <img src={getImageUrl(image) || noAlbum} alt={name} />
 
           <div className="AlbumHeader-info">
@@ -73,6 +74,12 @@ export const AlbumHeader = function ({
         </div>
 
         <div className="AlbumHeader-controls">
+          {onOpen && (
+            <IconButton label="Open" size={16} fontSize={10} onClick={onOpen}>
+              <MdArrowForward />
+            </IconButton>
+          )}
+
           <IconButton label="Play" size={16} fontSize={10} onClick={onPlay}>
             <MdOutlinePlayCircleOutline />
           </IconButton>

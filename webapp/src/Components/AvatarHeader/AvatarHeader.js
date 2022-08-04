@@ -2,6 +2,7 @@ import "./AvatarHeader.scss";
 import { useContext } from "react";
 import clsx from "clsx";
 import {
+  MdArrowForward,
   MdOutlinePlayCircleOutline,
   MdOutlineDeleteForever,
 } from "react-icons/md";
@@ -13,7 +14,7 @@ export const AvatarHeader = function ({
   className,
   type,
   name,
-  onClick,
+  onOpen,
   onRemove,
 }) {
   const { addTracksAndPlay } = useContext(ContextPlayer);
@@ -25,17 +26,22 @@ export const AvatarHeader = function ({
     } else if (type === "genre") {
       tracks = await getTracksByGenre(name);
     }
-    console.log(tracks);
     addTracksAndPlay(tracks);
   };
 
   return (
     <div className={clsx("AvatarHeader", className)}>
       <div className="AvatarHeader-content">
-        <Avatar name={name} onClick={onClick} />
+        <Avatar name={name} />
 
         <span className="AvatarHeader-name">{name}</span>
       </div>
+
+      {onOpen && (
+        <IconButton label="Open" size={16} fontSize={10} onClick={onOpen}>
+          <MdArrowForward />
+        </IconButton>
+      )}
 
       <IconButton label="Play" size={16} fontSize={10} onClick={onPlay}>
         <MdOutlinePlayCircleOutline />
