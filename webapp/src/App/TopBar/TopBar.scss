@@ -1,0 +1,11 @@
+@import "../../styles/colors.scss";
+
+.TopBar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  gap: 100px;
+  background-color: $colors-bg;
+}

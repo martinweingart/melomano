@@ -1,0 +1,45 @@
+.AlbumHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  .AlbumHeader-content {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 12px;
+
+    > img {
+      width: 100px;
+      height: 100px;
+    }
+
+    .AlbumHeader-info {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      > p {
+        margin: 0;
+      }
+
+      .AlbumHeader-info-name {
+        font-weight: 600;
+      }
+
+      .AlbumHeader-info-sm {
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      .AlbumHeader-info-xs {
+        font-size: 12px;
+        line-height: 18px;
+      }
+    }
+  }
+
+  .AlbumHeader-controls {
+    display: flex;
+    justify-content: flex-end;
+  }
+}

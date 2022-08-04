@@ -1,0 +1,17 @@
+.PlaylistView {
+  padding: 12px 0;
+  height: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 12px;
+
+  .PlaylistView-header {
+    padding: 0 12px;
+  }
+
+  .PlaylistView-tracklist {
+    padding: 0 12px;
+    overflow: auto;
+  }
+}

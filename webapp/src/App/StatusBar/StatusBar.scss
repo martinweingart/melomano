@@ -1,0 +1,12 @@
+@import "../../styles/colors.scss";
+
+.StatusBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 12px;
+  color: $colors-bg;
+
+  &.isEmpty {
+    background-color: $colors-bgSecondary;
+  }
+}

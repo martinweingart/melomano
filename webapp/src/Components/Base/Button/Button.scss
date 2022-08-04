@@ -1,0 +1,23 @@
+@import "../../../styles/colors.scss";
+
+.Button {
+  color: $colors-neutral;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 2px;
+  background: $colors-button;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $colors-buttonHover;
+  }
+
+  &:active {
+    background-color: $colors-buttonActive;
+  }
+
+  &:disabled {
+    border: 0;
+    background-color: $colors-buttonDisabled;
+  }
+}

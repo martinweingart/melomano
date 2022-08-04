@@ -1,0 +1,24 @@
+.AddListModal {
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+
+  .form {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: 40px;
+    gap: 12px;
+    align-items: center;
+
+    > input {
+      grid-column: 2;
+    }
+  }
+
+  > footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+}

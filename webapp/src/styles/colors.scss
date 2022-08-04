@@ -1,0 +1,25 @@
+$colors-neutral: #ecf0f1;
+$colors-bg: #2c3e50;
+$colors-bgActive: #232f3a;
+$colors-bgSecondary: #bdc3c7;
+
+$colors-bgHover: rgba(
+  $color: #bdc3c7,
+  $alpha: 0.2,
+);
+
+$colors-bgActive: rgba(
+  $color: #bdc3c7,
+  $alpha: 0.5,
+);
+
+$colors-inputBorder: #97aabd;
+$colors-inputBorderActive: #0d2332;
+
+$colors-button: #3f5466;
+$colors-buttonDisabled: #c7ccd1;
+$colors-buttonActive: #2e4050;
+$colors-buttonHover: rgba(
+  $color: #2e4050,
+  $alpha: 0.5,
+);

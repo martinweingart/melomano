@@ -1,0 +1,13 @@
+.App {
+  height: 100%;
+
+  .App-content {
+    height: 100%;
+    display: grid;
+    grid-template-rows: 48px 1fr 24px 84px;
+
+    .Main {
+      min-height: 0;
+    }
+  }
+}
