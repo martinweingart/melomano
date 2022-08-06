@@ -1,39 +1,41 @@
 .AlbumHeader {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 2px;
 
   .AlbumHeader-content {
     display: grid;
-    grid-template-columns: 100px 1fr;
+    grid-template-columns: 80px 1fr;
     gap: 12px;
 
     > img {
-      width: 100px;
-      height: 100px;
+      width: 80px;
+      height: 80px;
     }
 
     .AlbumHeader-info {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 2px;
 
       > p {
         margin: 0;
       }
 
       .AlbumHeader-info-name {
-        font-weight: 600;
-      }
-
-      .AlbumHeader-info-sm {
         font-size: 14px;
+        font-weight: 600;
         line-height: 20px;
       }
 
-      .AlbumHeader-info-xs {
+      .AlbumHeader-info-sm {
         font-size: 12px;
         line-height: 18px;
+      }
+
+      .AlbumHeader-info-xs {
+        font-size: 10px;
+        line-height: 16px;
       }
     }
   }
