@@ -39,7 +39,7 @@ export function Controls({ onOpenQueue }) {
   return (
     <div className="Controls">
       <IconButton
-        size={36}
+        size={32}
         aria-label="Play Mode"
         isDark
         onClick={togglePlayerMode}
@@ -49,7 +49,7 @@ export function Controls({ onOpenQueue }) {
 
       <div>
         <IconButton
-          size={36}
+          size={32}
           aria-label="Previous Track"
           isDark
           onClick={playPrev}
@@ -58,22 +58,22 @@ export function Controls({ onOpenQueue }) {
         </IconButton>
 
         {playerStatus === PLAYER_STATUS_PLAYING ? (
-          <IconButton size={36} aria-label="Pause" isDark onClick={togglePlay}>
+          <IconButton size={32} aria-label="Pause" isDark onClick={togglePlay}>
             <MdOutlinePauseCircleOutline />
           </IconButton>
         ) : (
-          <IconButton size={36} aria-label="Play" isDark onClick={togglePlay}>
+          <IconButton size={32} aria-label="Play" isDark onClick={togglePlay}>
             <MdOutlinePlayCircleOutline />
           </IconButton>
         )}
 
-        <IconButton size={36} aria-label="Next Track" isDark onClick={playNext}>
+        <IconButton aria-label="Next Track" isDark onClick={playNext}>
           <MdOutlineSkipNext />
         </IconButton>
       </div>
 
       <IconButton
-        size={36}
+        size={32}
         aria-label="Open Queue"
         isDark
         onClick={onOpenQueue}
