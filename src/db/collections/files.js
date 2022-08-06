@@ -32,7 +32,13 @@ module.exports.getArtists = function (query) {
     }
   }
 
-  return artists.map((name) => ({ name }));
+  const offset = query?.offset ? +query.offset : 0;
+  const limit = query?.limit ? offset + +query.limit : undefined;
+
+  return {
+    total: artists.length,
+    data: artists.slice(offset, limit).map((name) => ({ name })),
+  };
 };
 
 module.exports.getArtistByName = function (name) {
@@ -111,7 +117,13 @@ module.exports.getAlbums = function (query) {
     ...albums[id],
   }));
 
-  return response;
+  const offset = query?.offset ? +query.offset : 0;
+  const limit = query?.limit ? offset + +query.limit : undefined;
+
+  return {
+    total: response.length,
+    data: response.slice(offset, limit),
+  };
 };
 
 module.exports.getAlbumById = function (id) {
@@ -160,9 +172,9 @@ module.exports.getAlbumRandom = function () {
   if (!filesCollection) return null;
 
   const albums = module.exports.getAlbums({});
-  const randomIndex = getRandomNum(0, albums.length);
+  const randomIndex = getRandomNum(0, albums.total);
 
-  return albums[randomIndex];
+  return albums.data[randomIndex];
 };
 
 module.exports.getAlbumsRecent = function () {
@@ -229,7 +241,13 @@ module.exports.getGenres = function (query) {
     }
   }
 
-  return genres.map((name) => ({ name }));
+  const offset = query?.offset ? +query.offset : 0;
+  const limit = query?.limit ? offset + +query.limit : undefined;
+
+  return {
+    total: genres.length,
+    data: genres.slice(offset, limit).map((name) => ({ name })),
+  };
 };
 
 module.exports.getGenreByName = function (name) {

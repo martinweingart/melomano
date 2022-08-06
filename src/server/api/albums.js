@@ -7,6 +7,8 @@ const { validateQuery } = require("../../utils");
 const querySchema = joi.object({
   qname: joi.string(),
   artist: joi.string(),
+  limit: joi.number(),
+  offset: joi.number(),
 });
 
 router.get("/", (req, res) => {
