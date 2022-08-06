@@ -10,10 +10,18 @@ export const ListRender = function ({
   subtitle,
   id,
   onClick,
+  onScrollBottom,
   ...props
 }) {
+  const onScroll = (e) => {
+    const { scrollHeight, scrollTop, clientHeight } = e.target;
+    if (scrollHeight - scrollTop === clientHeight) {
+      onScrollBottom && onScrollBottom();
+    }
+  };
+
   return (
-    <div className={className}>
+    <div className={className} onScroll={onScroll}>
       <ul>
         {list.map((item) => (
           <ListRenderItem

@@ -1,25 +1,34 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "../../../Hooks/useQuery";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAlbumlists, removeAlbumlist } from "../../../Services/api";
 import { ListView } from "../ListView/ListView";
 
 export const AlbumlistsView = function () {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [filter, setFilter] = useState("");
 
-  const { loading, error, data, forceRefresh } = useQuery(getAlbumlists);
+  const { isLoading, data } = useQuery(["albumlists", { filter }], () =>
+    getAlbumlists({ filter })
+  );
 
   const onRemove = async (name) => {
     await removeAlbumlist(name);
-    forceRefresh();
+    queryClient.setQueryData(["albumlists", { filter }], (oldList) =>
+      oldList.filter((e) => e.name !== name)
+    );
   };
 
   return (
     <ListView
-      loading={loading}
+      loading={isLoading}
       list={data}
       type="avatar"
       title="name"
       id="name"
+      filter={filter}
+      onFilter={(value) => setFilter(value)}
       onOpen={(name) => navigate(`/albumlist/${name}`)}
       onRemove={onRemove}
     />

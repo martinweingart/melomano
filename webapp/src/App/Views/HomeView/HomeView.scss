@@ -2,19 +2,17 @@
 
 .HomeView {
   height: 100%;
-  padding: 12px 12px 0 12px;
   box-sizing: border-box;
   display: grid;
   grid-template-rows: auto 1fr;
-  gap: 24px;
+  gap: 12px;
 
   .HomeView-header {
-    padding: 12px;
-    border: 1px solid $colors-border-light;
-    border-radius: 5px;
+    padding: 6px;
+    border-bottom: 1px solid $colors-border-light;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 6px;
 
     > h4 {
       margin: 0;
@@ -27,14 +25,15 @@
   .HomeView-recent {
     box-sizing: border-box;
     display: grid;
-    grid-template-rows: 35px 1fr;
-    gap: 5px;
+    grid-template-rows: auto 1fr;
     min-height: 0;
+    gap: 2px;
 
     > h3 {
       margin: 0 12px;
+      padding-bottom: 2px;
       font-weight: 500;
-      font-size: 18px;
+      font-size: 14px;
       border-bottom: 1px solid $colors-border-light;
     }
 

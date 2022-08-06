@@ -2,8 +2,11 @@ import { SERVER_URL } from "../config";
 
 const API_URL = `${SERVER_URL}/api`;
 
-export async function getArtists() {
-  const response = await fetch(`${API_URL}/artists`);
+export async function getArtists({ limit, offset, filter }) {
+  const queryString = filter ? `qname=${filter}` : "";
+  const response = await fetch(
+    `${API_URL}/artists?limit=${limit}&offset=${offset}&${queryString}`
+  );
   return response.json();
 }
 
@@ -12,8 +15,11 @@ export async function getArtist(name) {
   return response.json();
 }
 
-export async function getAlbums() {
-  const response = await fetch(`${API_URL}/albums`);
+export async function getAlbums({ limit, offset, filter }) {
+  const queryString = filter ? `qname=${filter}` : "";
+  const response = await fetch(
+    `${API_URL}/albums?limit=${limit}&offset=${offset}&${queryString}`
+  );
   return response.json();
 }
 
@@ -27,8 +33,11 @@ export async function getRecent(id) {
   return response.json();
 }
 
-export async function getGenres() {
-  const response = await fetch(`${API_URL}/genres`);
+export async function getGenres({ limit, offset, filter }) {
+  const queryString = filter ? `qname=${filter}` : "";
+  const response = await fetch(
+    `${API_URL}/genres?limit=${limit}&offset=${offset}&${queryString}`
+  );
   return response.json();
 }
 
@@ -52,8 +61,9 @@ export async function getTracksByGenre(name) {
   return response.json();
 }
 
-export async function getPlaylists() {
-  const response = await fetch(`${API_URL}/playlists`);
+export async function getPlaylists({ filter }) {
+  const queryString = filter ? `qname=${filter}` : "";
+  const response = await fetch(`${API_URL}/playlists?${queryString}`);
   return response.json();
 }
 
@@ -92,8 +102,10 @@ export async function addToPlaylist(name, tracks) {
       name,
       tracks: [...playlist.tracks, ...tracks],
     });
+    return false;
   } else {
     addPlaylist({ name, tracks });
+    return true;
   }
 }
 
@@ -103,8 +115,9 @@ export function removePlaylist(name) {
   });
 }
 
-export async function getAlbumlists() {
-  const response = await fetch(`${API_URL}/albumlists`);
+export async function getAlbumlists({ filter }) {
+  const queryString = filter ? `qname=${filter}` : "";
+  const response = await fetch(`${API_URL}/albumlists?${queryString}`);
   if (response.status === 404) return Promise.resolve();
   return response.json();
 }
@@ -139,8 +152,10 @@ export async function addToAlbumlist(name, albumId) {
       name,
       albums: [...albumList.albums, albumId],
     });
+    return false;
   } else {
     addAlbumlist({ name, albums: [albumId] });
+    return true;
   }
 }
 

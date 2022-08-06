@@ -6,7 +6,6 @@
   .empty,
   .loading {
     margin: 0;
-    grid-row: span 2;
     display: flex;
     gap: 12px;
     justify-content: center;
@@ -15,5 +14,9 @@
 
   .ListView-list {
     overflow: auto;
+
+    &.hide {
+      display: none;
+    }
   }
 }

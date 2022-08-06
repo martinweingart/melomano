@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon --ignore ./webapp ./src/serve.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "scan": "node ./src/scan.js"
+    "scan": "node ./src/scan.js",
+    "build": "npm install; (cd webapp && npm install && npm run build);"
   },
   "keywords": [
     "music",

@@ -1,6 +1,6 @@
 import { Fragment, useState, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "../../../Hooks/useQuery";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { ContextPlayer } from "../../../Context/ContextPlayer";
 import { ListView } from "../ListView/ListView";
 import { AddListModal } from "../../../Components";
@@ -13,10 +13,11 @@ import {
 
 export const AlbumsView = function () {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { addTracksAndPlay } = useContext(ContextPlayer);
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
   const [modalType, setModalType] = useState("playlist");
-  const { loading, error, data } = useQuery(getAlbums);
+  const [filter, setFilter] = useState("");
 
   const refId = useRef();
 
@@ -35,11 +36,55 @@ export const AlbumsView = function () {
     setIsPlaylistModalOpen(false);
     if (modalType === "playlist") {
       const tracks = await getTracksByAlbum(refId.current);
-      await addToPlaylist(name, tracks);
+      const isNewPlaylist = await addToPlaylist(name, tracks);
+      if (isNewPlaylist) {
+        queryClient.setQueryData(["playlists"], (oldList) => [
+          ...oldList,
+          { name },
+        ]);
+      }
     } else {
-      await addToAlbumlist(name, refId.current);
+      const isNewAlbumlist = await addToAlbumlist(name, refId.current);
+      if (isNewAlbumlist) {
+        queryClient.setQueryData(["albumlists"], (oldList) => [
+          ...oldList,
+          { name },
+        ]);
+      }
     }
   };
+
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = useInfiniteQuery(
+    ["albums"],
+    ({ pageParam }) => getAlbums({ limit: 50, offset: pageParam || 0, filter }),
+    {
+      getNextPageParam: (lastPage, pages) => {
+        if (pages.length > 0 && pages[0].total > pages.length * 50)
+          return pages.length * 50;
+        else return undefined;
+      },
+    }
+  );
+
+  const onScrollBottom = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const list = data
+    ? [].concat.apply(
+        [],
+        data.pages.map((d) => d.data)
+      )
+    : [];
 
   return (
     <Fragment>
@@ -51,12 +96,15 @@ export const AlbumsView = function () {
       />
 
       <ListView
-        loading={loading}
-        list={data}
+        loading={isFetching || isFetchingNextPage}
+        list={list}
         type="box"
         title="name"
         subtitle="artist"
         id="id"
+        filter={filter}
+        onScrollBottom={onScrollBottom}
+        onFilter={(value) => setFilter(value)}
         onOpen={(id) => navigate(`/album/${id}`)}
         onPlay={onPlay}
         onAddToPlaylist={(id) => onOpenListModal("playlist", id)}

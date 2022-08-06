@@ -1,6 +1,7 @@
 import "./AlbumView.scss";
 import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   AlbumHeader,
   Tracklist,
@@ -12,6 +13,7 @@ import * as api from "../../../Services/api";
 export const AlbumView = function () {
   const params = useParams();
   const [album, setAlbum] = useState();
+  const queryClient = useQueryClient();
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
   const [selectedTrack, setSelectedTrack] = useState();
 
@@ -26,7 +28,13 @@ export const AlbumView = function () {
 
   const onAddToPlaylist = async (name) => {
     setIsPlaylistModalOpen(false);
-    await api.addToPlaylist(name, [selectedTrack]);
+    const isNewPlaylist = await api.addToPlaylist(name, [selectedTrack]);
+    if (isNewPlaylist) {
+      queryClient.setQueryData(["playlists"], (oldList) => [
+        ...oldList,
+        { name },
+      ]);
+    }
   };
 
   return (

@@ -1,25 +1,14 @@
 import "./AddListModal.scss";
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Button, Modal, Autocomplete } from "../Base";
 import { getPlaylists, getAlbumlists } from "../../Services/api";
 
 export function AddListModal({ isOpen, type, onSave, onClose }) {
-  const [list, setList] = useState([]);
   const [value, setValue] = useState("");
 
-  useEffect(() => {
-    const get = async () => {
-      let list = [];
-      if (type === "playlist") {
-        list = await getPlaylists();
-      } else {
-        list = await getAlbumlists();
-      }
-      setList(list);
-    };
-
-    get();
-  }, [type]);
+  const { data: playlists } = useQuery(["playlists"], getPlaylists);
+  const { data: albumlists } = useQuery(["albumlists"], getAlbumlists);
 
   useEffect(() => {
     if (!isOpen) {
@@ -27,7 +16,8 @@ export function AddListModal({ isOpen, type, onSave, onClose }) {
     }
   }, [isOpen]);
 
-  const options = list.map((p) => p.name);
+  const list = type === "playlists" ? playlists : albumlists;
+  const options = list ? list.map((p) => p.name) : [];
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>

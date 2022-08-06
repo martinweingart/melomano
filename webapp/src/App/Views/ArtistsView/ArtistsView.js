@@ -1,6 +1,6 @@
-import { Fragment, useEffect, useState, useContext, useRef } from "react";
+import { Fragment, useState, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { useQuery } from "../../../Hooks/useQuery";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { ContextPlayer } from "../../../Context/ContextPlayer";
 import {
   getArtists,
@@ -12,11 +12,12 @@ import { AddListModal } from "../../../Components";
 
 export const ArtistsView = function () {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { addTracksAndPlay } = useContext(ContextPlayer);
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
-  const refId = useRef();
+  const [filter, setFilter] = useState("");
 
-  const { loading, error, data } = useQuery(getArtists);
+  const refId = useRef();
 
   const onPlay = async (name) => {
     const tracks = await getTracksByArtist(name);
@@ -26,8 +27,47 @@ export const ArtistsView = function () {
   const onAddToPlaylist = async (name) => {
     setIsPlaylistModalOpen(false);
     const tracks = await getTracksByArtist(refId.current);
-    await addToPlaylist(name, tracks);
+    const isNewPlaylist = await addToPlaylist(name, tracks);
+    if (isNewPlaylist) {
+      queryClient.setQueryData(["playlists"], (oldList) => [
+        ...oldList,
+        { name },
+      ]);
+    }
   };
+
+  const {
+    data,
+    error,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isFetchingNextPage,
+  } = useInfiniteQuery(
+    ["artists"],
+    ({ pageParam }) =>
+      getArtists({ limit: 50, offset: pageParam || 0, filter }),
+    {
+      getNextPageParam: (lastPage, pages) => {
+        if (pages.length > 0 && pages[0].total > pages.length * 50)
+          return pages.length * 50;
+        else return undefined;
+      },
+    }
+  );
+
+  const onScrollBottom = () => {
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  const list = data
+    ? [].concat.apply(
+        [],
+        data.pages.map((d) => d.data)
+      )
+    : [];
 
   return (
     <Fragment>
@@ -38,11 +78,14 @@ export const ArtistsView = function () {
         onSave={onAddToPlaylist}
       />
       <ListView
-        loading={loading}
-        list={data}
+        loading={isFetching || isFetchingNextPage}
+        list={list}
         type="avatar"
         title="name"
         id="name"
+        filter={filter}
+        onScrollBottom={onScrollBottom}
+        onFilter={(value) => setFilter(value)}
         onOpen={(name) => navigate(`/artist/${name}`)}
         onPlay={onPlay}
         onAddToPlaylist={(id) => {

@@ -1,16 +1,22 @@
 import "./ListView.scss";
-import { Fragment, useState } from "react";
 import { MdCloudOff } from "react-icons/md";
 import { SearchBar, ListRender, Spinner } from "../../../Components";
+import clsx from "clsx";
 
-export const ListView = function ({ list, loading, ...props }) {
-  const [filter, setFilter] = useState("");
-
+export const ListView = function ({
+  list,
+  loading,
+  filter,
+  onFilter,
+  ...props
+}) {
   return (
     <div className="ListView">
+      <SearchBar value={filter} onChange={onFilter} />
+
       {loading && (
         <div className="loading">
-          <Spinner size={32} />{" "}
+          <Spinner size={32} />
         </div>
       )}
 
@@ -21,18 +27,13 @@ export const ListView = function ({ list, loading, ...props }) {
         </p>
       )}
 
-      {!loading && list.length > 0 && (
-        <Fragment>
-          <SearchBar value={filter} onChange={(value) => setFilter(value)} />
-          <ListRender
-            className="ListView-list"
-            list={list.filter(
-              (item) => item[props.title].toLowerCase().indexOf(filter) !== -1
-            )}
-            {...props}
-          />
-        </Fragment>
-      )}
+      <ListRender
+        className={clsx("ListView-list", {
+          hide: loading || list.length === 0,
+        })}
+        list={list || []}
+        {...props}
+      />
     </div>
   );
 };
