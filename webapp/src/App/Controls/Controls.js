@@ -67,7 +67,7 @@ export function Controls({ onOpenQueue }) {
           </IconButton>
         )}
 
-        <IconButton aria-label="Next Track" isDark onClick={playNext}>
+        <IconButton size={32} aria-label="Next Track" isDark onClick={playNext}>
           <MdOutlineSkipNext />
         </IconButton>
       </div>
