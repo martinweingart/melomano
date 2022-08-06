@@ -1,13 +1,20 @@
 import "./HomeView.scss";
 import { Fragment, useEffect, useState, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { AlbumHeader, ListRender, AddListModal } from "../../../Components";
+import clsx from "clsx";
+import {
+  AlbumHeader,
+  ListRender,
+  AddListModal,
+  Spinner,
+} from "../../../Components";
 import * as api from "../../../Services/api";
 import { ContextPlayer } from "../../../Context/ContextPlayer";
 
 export const HomeView = function () {
   const navigate = useNavigate();
   const { addTracksAndPlay } = useContext(ContextPlayer);
+  const [isLoading, setIsLoading] = useState(true);
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
   const [modalType, setModalType] = useState("playlist");
   const [album, setAlbum] = useState();
@@ -21,6 +28,7 @@ export const HomeView = function () {
       const recent = await api.getRecent();
       setRecent(recent);
       setAlbum(album);
+      setIsLoading(false);
     };
 
     getData();
@@ -56,33 +64,36 @@ export const HomeView = function () {
         onSave={onSave}
       />
 
-      <div className="HomeView">
-        {album && (
-          <div className="HomeView-header">
-            <h4>Check this album!</h4>
-            <AlbumHeader
-              {...album}
-              onOpen={() => navigate(`/album/${album.id}`)}
-            />
-          </div>
+      <div className={clsx("HomeView", { isLoading })}>
+        {isLoading && <Spinner size={32} />}
+        {!isLoading && (
+          <Fragment>
+            <div className="HomeView-header">
+              <h4>Check this album!</h4>
+              <AlbumHeader
+                {...album}
+                onOpen={() => navigate(`/album/${album.id}`)}
+              />
+            </div>
+
+            <div className="HomeView-recent">
+              <h3>Recently added</h3>
+
+              <ListRender
+                className="HomeView-recent-list"
+                list={recent}
+                type="box"
+                title="name"
+                subtitle="artist"
+                id="id"
+                onOpen={(id) => navigate(`/album/${id}`)}
+                onPlay={onPlay}
+                onAddToPlaylist={(id) => onOpenListModal("playlist", id)}
+                onAddToAlbumlist={(id) => onOpenListModal("albumlist", id)}
+              />
+            </div>
+          </Fragment>
         )}
-
-        <div className="HomeView-recent">
-          <h3>Recently added</h3>
-
-          <ListRender
-            className="HomeView-recent-list"
-            list={recent}
-            type="box"
-            title="name"
-            subtitle="artist"
-            id="id"
-            onOpen={(id) => navigate(`/album/${id}`)}
-            onPlay={onPlay}
-            onAddToPlaylist={(id) => onOpenListModal("playlist", id)}
-            onAddToAlbumlist={(id) => onOpenListModal("albumlist", id)}
-          />
-        </div>
       </div>
     </Fragment>
   );

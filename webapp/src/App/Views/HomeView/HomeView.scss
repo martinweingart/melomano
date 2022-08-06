@@ -7,6 +7,11 @@
   grid-template-rows: auto 1fr;
   gap: 12px;
 
+  &.isLoading {
+    grid-template-rows: 1fr;
+    align-items: center;
+  }
+
   .HomeView-header {
     padding: 6px;
     border-bottom: 1px solid $colors-border-light;
