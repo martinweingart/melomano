@@ -19,6 +19,12 @@ function playTrack(id) {
   return audio.play();
 }
 
+function stopAudio() {
+  audio.pause();
+  audio.setAttribute("src", "");
+  audio.load();
+}
+
 export const ContextPlayer = React.createContext({});
 
 export function ContextPlayerProvider({ children }) {
@@ -59,6 +65,12 @@ export function ContextPlayerProvider({ children }) {
         ...queue.slice(index + 1, queue.length),
       ];
     });
+  };
+
+  const clearQueue = () => {
+    setQueue([]);
+    setCurrentTrackIndex(-1);
+    stopAudio();
   };
 
   const togglePlay = useCallback(() => {
@@ -170,6 +182,7 @@ export function ContextPlayerProvider({ children }) {
         playNext,
         playPrev,
         onChangeTrackIndex,
+        clearQueue,
       }}
     >
       {children}

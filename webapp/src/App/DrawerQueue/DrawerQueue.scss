@@ -3,10 +3,8 @@
 .DrawerQueue-content {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 12px 0;
-  box-sizing: border-box;
   height: 100%;
+  gap: 6px;
 
   &.isLoading {
     height: 100%;
@@ -14,24 +12,38 @@
   }
 
   .DrawerQueue-header {
-    align-self: self-end;
-    padding: 0 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px;
+    border-bottom: 1px solid $colors-border-light;
+
+    > h3 {
+      flex: 1;
+      margin: 0;
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+    }
   }
 
-  > h3 {
-    margin: 0;
-    padding: 0 12px 12px 12px;
-  }
+  .empty {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
 
-  > span {
-    font-size: 14px;
-    padding: 0 12px;
+    > p {
+      margin: 0;
+    }
   }
 
   .DrawerQueue-tracklist {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 6px;
     font-size: 14px;
     overflow: auto;
     padding: 0 12px;
@@ -44,6 +56,7 @@
 
       &.isActive {
         font-weight: 600;
+        font-style: italic;
       }
 
       .DrawerQueue-tracklist-item-info {
@@ -54,6 +67,7 @@
 
       .DrawerQueue-tracklist-item-duration {
         text-align: right;
+        align-self: center;
       }
 
       .DrawerQueue-tracklist-item-action {
