@@ -10,6 +10,15 @@ import {
 } from "../Constants/player";
 import { getRandomNum } from "../Helpers";
 
+const audio = new Audio();
+
+function playTrack(id) {
+  audio.pause();
+  audio.setAttribute("src", getTrackUrl(id));
+  audio.load();
+  return audio.play();
+}
+
 export const ContextPlayer = React.createContext({});
 
 export function ContextPlayerProvider({ children }) {
@@ -19,18 +28,11 @@ export function ContextPlayerProvider({ children }) {
   const [playerStatus, setPlayerStatus] = useState(PLAYER_STATUS_STOPPED);
   const [playerMode, setPlayerMode] = useState(PLAYER_MODE_NORMAL);
 
-  const audioRef = useRef(new Audio());
-
-  const playTrack = (id) => {
-    audioRef.current.src = getTrackUrl(id);
-    return audioRef.current.play();
-  };
-
   const addTrack = (track) => {
     setQueue((queue) => {
       //If queue is empty, play track
       if (queue.length === 0) {
-        playTrack(track.id);
+        playTrack(track.id, audio);
         setCurrentTrackIndex(0);
       }
       return [...queue, track];
@@ -38,14 +40,14 @@ export function ContextPlayerProvider({ children }) {
   };
 
   const addTracksAndPlay = (tracks) => {
-    playTrack(tracks[0].id);
+    playTrack(tracks[0].id, audio);
     setCurrentTrackIndex(0);
     setQueue(tracks);
   };
 
   const removeTrack = async (index) => {
     if (index === currentTrackIndex) {
-      audioRef.current.pause();
+      audio.pause();
       if (queue.length > 1) {
         await playTrack(queue[index === 0 ? index + 1 : index - 1].id);
       }
@@ -61,9 +63,9 @@ export function ContextPlayerProvider({ children }) {
 
   const togglePlay = useCallback(() => {
     if (playerStatus === PLAYER_STATUS_PAUSED) {
-      audioRef.current.play();
+      audio.play();
     } else {
-      audioRef.current.pause();
+      audio.pause();
     }
   }, [playerStatus]);
 
@@ -77,7 +79,7 @@ export function ContextPlayerProvider({ children }) {
     }
   }, [playerMode]);
 
-  const playNext = useCallback(() => {
+  const playNext = useCallback(async () => {
     const isLast = currentTrackIndex === queue.length - 1;
     let nextIndex = currentTrackIndex;
     if (playerMode === PLAYER_MODE_NORMAL && !isLast) {
@@ -91,7 +93,7 @@ export function ContextPlayerProvider({ children }) {
     }
 
     if (nextIndex !== currentTrackIndex) {
-      playTrack(queue[nextIndex].id);
+      playTrack(queue[nextIndex].id, audio);
       setCurrentTrackIndex(nextIndex);
     }
   }, [queue, currentTrackIndex, playerMode]);
@@ -122,19 +124,7 @@ export function ContextPlayerProvider({ children }) {
     setCurrentTrackIndex(newIndex);
   };
 
-  audioRef.current.addEventListener("play", (e) =>
-    setPlayerStatus(PLAYER_STATUS_PLAYING)
-  );
-  audioRef.current.addEventListener("pause", (e) =>
-    setPlayerStatus(PLAYER_STATUS_PAUSED)
-  );
-  audioRef.current.addEventListener("timeupdate", (e) =>
-    setCurrentTime(e.target.currentTime)
-  );
-
   useEffect(() => {
-    const audio = audioRef.current;
-
     const listener = (e) => {
       if (e.target.ended) {
         playNext();
@@ -147,6 +137,22 @@ export function ContextPlayerProvider({ children }) {
       audio.removeEventListener("ended", listener);
     };
   }, [playNext]);
+
+  useEffect(() => {
+    const playListener = (e) => setPlayerStatus(PLAYER_STATUS_PLAYING);
+    const pauseListener = (e) => setPlayerStatus(PLAYER_STATUS_PAUSED);
+    const timeListener = (e) => setCurrentTime(e.target.currentTime);
+
+    audio.addEventListener("play", playListener);
+    audio.addEventListener("pause", pauseListener);
+    audio.addEventListener("timeupdate", timeListener);
+
+    return () => {
+      audio.removeEventListener("play", playListener);
+      audio.removeEventListener("pause", pauseListener);
+      audio.removeEventListener("timeupdate", timeListener);
+    };
+  }, []);
 
   return (
     <ContextPlayer.Provider
