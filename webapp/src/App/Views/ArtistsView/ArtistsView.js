@@ -44,7 +44,7 @@ export const ArtistsView = function () {
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    ["artists"],
+    ["artists", { filter }],
     ({ pageParam }) =>
       getArtists({ limit: 50, offset: pageParam || 0, filter }),
     {

@@ -43,7 +43,7 @@ export const GenresView = function () {
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    ["genres"],
+    ["genres", { filter }],
     ({ pageParam }) => getGenres({ limit: 50, offset: pageParam || 0, filter }),
     {
       getNextPageParam: (lastPage, pages) => {

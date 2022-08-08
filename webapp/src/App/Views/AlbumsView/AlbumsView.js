@@ -62,7 +62,7 @@ export const AlbumsView = function () {
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery(
-    ["albums"],
+    ["albums", { filter }],
     ({ pageParam }) => getAlbums({ limit: 50, offset: pageParam || 0, filter }),
     {
       getNextPageParam: (lastPage, pages) => {
