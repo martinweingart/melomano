@@ -1,4 +1,5 @@
 const db = require("../index");
+const { encodeName } = require("../../utils");
 
 module.exports.getPlaylists = function (query) {
   const playlistsCollection = db.getCollection("playlists");
@@ -15,7 +16,7 @@ module.exports.getPlaylists = function (query) {
 
   const results = playlistsCollection
     .find(dbQueryObj)
-    .map((o) => ({ name: o.name }));
+    .map((o) => ({ id: encodeName(o.name), name: o.name }));
 
   return results;
 };

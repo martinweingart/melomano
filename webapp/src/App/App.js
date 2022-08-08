@@ -57,11 +57,11 @@ function App() {
                 <Route path="genres" element={<GenresView />} />
                 <Route path="playlists" element={<PlaylistsView />} />
                 <Route path="albumlists" element={<AlbumlistsView />} />
-                <Route path="artist/:name" element={<ArtistView />} />
+                <Route path="artist/:id" element={<ArtistView />} />
                 <Route path="album/:albumid" element={<AlbumView />} />
-                <Route path="genre/:name" element={<GenreView />} />
-                <Route path="playlist/:name" element={<PlaylistView />} />
-                <Route path="albumlist/:name" element={<AlbumlistView />} />
+                <Route path="genre/:id" element={<GenreView />} />
+                <Route path="playlist/:id" element={<PlaylistView />} />
+                <Route path="albumlist/:id" element={<AlbumlistView />} />
               </Routes>
             </div>
 

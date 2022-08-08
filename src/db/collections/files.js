@@ -5,6 +5,7 @@ const {
   getTracksWithId,
   getAlbumId,
   getRandomNum,
+  encodeName,
 } = require("../../utils");
 
 module.exports.getArtists = function (query) {
@@ -37,7 +38,9 @@ module.exports.getArtists = function (query) {
 
   return {
     total: artists.length,
-    data: artists.slice(offset, limit).map((name) => ({ name })),
+    data: artists
+      .slice(offset, limit)
+      .map((name) => ({ id: encodeName(name), name })),
   };
 };
 
@@ -163,6 +166,7 @@ module.exports.getAlbumById = function (id) {
     genres: genres,
     tracks: getTracksWithId(results),
     image: getAlbumArtUrl(albumArt),
+    id,
   };
 };
 
@@ -246,7 +250,9 @@ module.exports.getGenres = function (query) {
 
   return {
     total: genres.length,
-    data: genres.slice(offset, limit).map((name) => ({ name })),
+    data: genres
+      .slice(offset, limit)
+      .map((name) => ({ id: encodeName(name), name })),
   };
 };
 

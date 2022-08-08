@@ -1,5 +1,4 @@
 import "./AvatarHeader.scss";
-import { useContext } from "react";
 import clsx from "clsx";
 import {
   MdArrowForward,
@@ -7,28 +6,14 @@ import {
   MdOutlineDeleteForever,
 } from "react-icons/md";
 import { IconButton, Avatar } from "../Base";
-import { ContextPlayer } from "../../Context/ContextPlayer";
-import { getTracksByArtist, getTracksByGenre } from "../../Services/api";
 
 export const AvatarHeader = function ({
   className,
-  type,
   name,
   onOpen,
+  onPlay,
   onRemove,
 }) {
-  const { addTracksAndPlay } = useContext(ContextPlayer);
-
-  const onPlay = async () => {
-    let tracks = [];
-    if (type === "artist") {
-      tracks = await getTracksByArtist(name);
-    } else if (type === "genre") {
-      tracks = await getTracksByGenre(name);
-    }
-    addTracksAndPlay(tracks);
-  };
-
   return (
     <div className={clsx("AvatarHeader", className)}>
       <div className="AvatarHeader-content">
@@ -43,9 +28,11 @@ export const AvatarHeader = function ({
         </IconButton>
       )}
 
-      <IconButton label="Play" size={16} fontSize={10} onClick={onPlay}>
-        <MdOutlinePlayCircleOutline />
-      </IconButton>
+      {onPlay && (
+        <IconButton label="Play" size={16} fontSize={10} onClick={onPlay}>
+          <MdOutlinePlayCircleOutline />
+        </IconButton>
+      )}
 
       {onRemove && (
         <IconButton label="Remove" size={16} fontSize={10} onClick={onRemove}>

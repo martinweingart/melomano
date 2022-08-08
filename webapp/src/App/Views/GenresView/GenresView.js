@@ -46,7 +46,7 @@ export const GenresView = function () {
     ["genres", { filter }],
     ({ pageParam }) => getGenres({ limit: 50, offset: pageParam || 0, filter }),
     {
-      getNextPageParam: (lastPage, pages) => {
+      getNextPageParam: (_lastPage, pages) => {
         if (pages.length > 0 && pages[0].total > pages.length * 50)
           return pages.length * 50;
         else return undefined;
@@ -81,7 +81,6 @@ export const GenresView = function () {
         list={list}
         type="avatar"
         title="name"
-        id="name"
         filter={filter}
         onScrollBottom={onScrollBottom}
         onFilter={(value) => setFilter(value)}

@@ -82,11 +82,10 @@ export const ArtistsView = function () {
         list={list}
         type="avatar"
         title="name"
-        id="name"
         filter={filter}
         onScrollBottom={onScrollBottom}
         onFilter={(value) => setFilter(value)}
-        onOpen={(name) => navigate(`/artist/${name}`)}
+        onOpen={(id) => navigate(`/artist/${id}`)}
         onPlay={onPlay}
         onAddToPlaylist={(id) => {
           setIsPlaylistModalOpen(true);

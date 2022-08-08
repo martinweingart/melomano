@@ -101,7 +101,6 @@ export const AlbumsView = function () {
         type="box"
         title="name"
         subtitle="artist"
-        id="id"
         filter={filter}
         onScrollBottom={onScrollBottom}
         onFilter={(value) => setFilter(value)}

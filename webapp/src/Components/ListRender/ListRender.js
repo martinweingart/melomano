@@ -8,7 +8,6 @@ export const ListRender = function ({
   type,
   title,
   subtitle,
-  id,
   onClick,
   onScrollBottom,
   ...props
@@ -25,8 +24,8 @@ export const ListRender = function ({
       <ul>
         {list.map((item) => (
           <ListRenderItem
-            key={`ListRenderItem-${item[id]}`}
-            id={item[id]}
+            key={`ListRenderItem-${item.id}`}
+            id={item.id}
             type={type}
             title={item[title]}
             subtitle={item[subtitle]}

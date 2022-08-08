@@ -4,6 +4,12 @@
   display: grid;
   grid-template-rows: auto auto 1fr;
 
+  &.isLoading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .header {
     padding: 6px 12px;
   }

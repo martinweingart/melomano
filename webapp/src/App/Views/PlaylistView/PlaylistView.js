@@ -1,23 +1,24 @@
 import "./PlaylistView.scss";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AvatarHeader, Divider, Tracklist } from "../../../Components";
-import * as api from "../../../Services/api";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import clsx from "clsx";
+import { AvatarHeader, Divider, Tracklist, Spinner } from "../../../Components";
+import {
+  getPlaylist,
+  removePlaylist,
+  updatePlaylist,
+} from "../../../Services/api";
 import { removeItemFromList } from "../../../Helpers";
 
 export const PlaylistView = function () {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const params = useParams();
-  const [playlist, setPlaylist] = useState();
 
-  useEffect(() => {
-    const getPlaylist = async (name) => {
-      const playlist = await api.getPlaylist(name);
-      setPlaylist(playlist);
-    };
-
-    getPlaylist(params.name);
-  }, [params.name]);
+  const { isLoading, data: playlist } = useQuery(["playlist", params.id], () =>
+    getPlaylist(params.id)
+  );
 
   const onRemoveTrack = async (_track, index) => {
     const newPlaylist = {
@@ -25,18 +26,19 @@ export const PlaylistView = function () {
       tracks: removeItemFromList(playlist.tracks, index),
     };
 
-    await api.updatePlaylist(newPlaylist);
-    setPlaylist(newPlaylist);
+    await updatePlaylist(newPlaylist);
+    queryClient.setQueryData(["playlist", params.id], newPlaylist);
   };
 
   const onRemove = async () => {
-    await api.removePlaylist(playlist.name);
+    await removePlaylist(playlist.name);
     navigate("/", { replace: true });
   };
 
   return (
-    <div className="PlaylistView">
-      {playlist && (
+    <div className={clsx("PlaylistView", { isLoading })}>
+      {isLoading && <Spinner size={32} />}
+      {!isLoading && (
         <Fragment>
           <AvatarHeader
             className="header"

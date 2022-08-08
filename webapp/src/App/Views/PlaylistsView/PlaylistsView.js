@@ -37,7 +37,6 @@ export const PlaylistsView = function () {
       list={data}
       type="avatar"
       title="name"
-      id="name"
       filter={filter}
       onFilter={(value) => setFilter(value)}
       onOpen={(name) => navigate(`/playlist/${name}`)}

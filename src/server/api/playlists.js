@@ -2,7 +2,7 @@ const joi = require("joi");
 const express = require("express");
 const router = express.Router();
 const db = require("../../db");
-const { validateQuery } = require("../../utils");
+const { validateQuery, decodeId } = require("../../utils");
 
 const querySchema = joi.object({
   qname: joi.string(),
@@ -16,8 +16,8 @@ router.get("/", (req, res) => {
   res.json(db.playlists.getPlaylists(req.query));
 });
 
-router.get("/:name", (req, res) => {
-  const playlist = db.playlists.getPlaylistByName(req.params.name);
+router.get("/:id", (req, res) => {
+  const playlist = db.playlists.getPlaylistByName(decodeId(req.params.id));
 
   if (playlist) {
     res.status(200).json(playlist);
@@ -26,8 +26,8 @@ router.get("/:name", (req, res) => {
   }
 });
 
-router.get("/:name/tracks", (req, res) => {
-  res.json(db.playlists.getTracksByPlaylist(req.params.name));
+router.get("/:id/tracks", (req, res) => {
+  res.json(db.playlists.getTracksByPlaylist(decodeId(req.params.id)));
 });
 
 router.post("/", (req, res) => {
@@ -43,8 +43,8 @@ router.post("/", (req, res) => {
   }
 });
 
-router.put("/:name", (req, res) => {
-  const playlist = db.playlists.getPlaylistByName(req.body.name);
+router.put("/:id", (req, res) => {
+  const playlist = db.playlists.getPlaylistByName(decodeId(req.params.id));
 
   if (playlist) {
     playlist.tracks = req.body.tracks;
@@ -57,11 +57,11 @@ router.put("/:name", (req, res) => {
   res.status(200).json();
 });
 
-router.delete("/:name", (req, res) => {
-  const playlist = db.playlists.getPlaylistByName(req.params.name);
+router.delete("/:id", (req, res) => {
+  const playlist = db.playlists.getPlaylistByName(decodeId(req.params.id));
 
   if (playlist) {
-    db.playlists.removePlaylist(req.params.name);
+    db.playlists.removePlaylist(decodeId(req.params.id));
     res.status(200).json();
   } else {
     res.status(404).json();

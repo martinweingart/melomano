@@ -10,8 +10,8 @@ export async function getArtists({ limit, offset, filter }) {
   return response.json();
 }
 
-export async function getArtist(name) {
-  const response = await fetch(`${API_URL}/artists/${name}`);
+export async function getArtist(id) {
+  const response = await fetch(`${API_URL}/artists/${id}`);
   return response.json();
 }
 
@@ -28,7 +28,7 @@ export async function getAlbum(id) {
   return response.json();
 }
 
-export async function getRecent(id) {
+export async function getRecent() {
   const response = await fetch(`${API_URL}/albums/recent`);
   return response.json();
 }
@@ -41,8 +41,8 @@ export async function getGenres({ limit, offset, filter }) {
   return response.json();
 }
 
-export async function getGenre(name) {
-  const response = await fetch(`${API_URL}/genres/${name}`);
+export async function getGenre(id) {
+  const response = await fetch(`${API_URL}/genres/${id}`);
   return response.json();
 }
 
@@ -51,13 +51,13 @@ export async function getTracksByAlbum(id) {
   return response.json();
 }
 
-export async function getTracksByArtist(name) {
-  const response = await fetch(`${API_URL}/artists/${name}/tracks`);
+export async function getTracksByArtist(id) {
+  const response = await fetch(`${API_URL}/artists/${id}/tracks`);
   return response.json();
 }
 
-export async function getTracksByGenre(name) {
-  const response = await fetch(`${API_URL}/genres/${name}/tracks`);
+export async function getTracksByGenre(id) {
+  const response = await fetch(`${API_URL}/genres/${id}/tracks`);
   return response.json();
 }
 

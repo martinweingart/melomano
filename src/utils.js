@@ -50,3 +50,12 @@ module.exports.getAlbumArtUrl = function (filename) {
 module.exports.getTracksWithId = function (results) {
   return results.map((r) => ({ ...r, id: r["$loki"] }));
 };
+
+module.exports.encodeName = function (name) {
+  return encodeURIComponent(Buffer.from(name).toString("base64"));
+};
+
+module.exports.decodeId = function (id) {
+  const removePadding = id.replace(/\%3D/g, "");
+  return decodeURIComponent(Buffer.from(removePadding, "base64").toString());
+};

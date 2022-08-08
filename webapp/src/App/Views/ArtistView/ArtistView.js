@@ -1,28 +1,46 @@
 import "./ArtistView.scss";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AvatarHeader, Divider, ListRender } from "../../../Components";
-import * as api from "../../../Services/api";
+import { useQuery } from "@tanstack/react-query";
+import clsx from "clsx";
+import {
+  AvatarHeader,
+  Divider,
+  ListRender,
+  Spinner,
+} from "../../../Components";
+import { ContextPlayer } from "../../../Context/ContextPlayer";
+import {
+  getArtist,
+  getTracksByArtist,
+  getTracksByGenre,
+} from "../../../Services/api";
 
 export const ArtistView = function () {
   const navigate = useNavigate();
   const params = useParams();
-  const [artist, setArtist] = useState();
+  const { addTracksAndPlay } = useContext(ContextPlayer);
 
-  useEffect(() => {
-    const getArtist = async (name) => {
-      const artist = await api.getArtist(name);
-      setArtist(artist);
-    };
+  const { isLoading, data: artist } = useQuery(["artist", params.id], () =>
+    getArtist(params.id)
+  );
 
-    getArtist(params.name);
-  }, [params.name]);
+  const onPlay = async () => {
+    const tracks = await getTracksByArtist(params.id);
+    addTracksAndPlay(tracks);
+  };
 
   return (
-    <div className="ArtistView">
-      {artist && (
+    <div className={clsx("ArtistView", { isLoading })}>
+      {isLoading && <Spinner size={32} />}
+      {!isLoading && (
         <Fragment>
-          <AvatarHeader className="header" type="artist" name={artist.name} />
+          <AvatarHeader
+            className="header"
+            type="artist"
+            name={artist.name}
+            onPlay={onPlay}
+          />
           <Divider />
           <ListRender
             className="list"
@@ -30,7 +48,6 @@ export const ArtistView = function () {
             type="box"
             title="name"
             subtitle="year"
-            id="id"
             onOpen={(id) => navigate(`/album/${id}`)}
           />
         </Fragment>

@@ -1,14 +1,23 @@
 import "./GenreView.scss";
-import { Fragment, useEffect, useState, useContext, useRef } from "react";
+import { Fragment, useState, useContext, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import clsx from "clsx";
 import { ContextPlayer } from "../../../Context/ContextPlayer";
 import {
   AvatarHeader,
   Divider,
   ListRender,
   AddListModal,
+  Spinner,
 } from "../../../Components";
-import * as api from "../../../Services/api";
+import {
+  getGenre,
+  getTracksByAlbum,
+  addToPlaylist,
+  addToAlbumlist,
+  getTracksByGenre,
+} from "../../../Services/api";
 
 export const GenreView = function () {
   const navigate = useNavigate();
@@ -16,21 +25,15 @@ export const GenreView = function () {
   const { addTracksAndPlay } = useContext(ContextPlayer);
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
   const [modalType, setModalType] = useState("playlist");
-  const [genre, setGenre] = useState();
+
+  const { isLoading, data: genre } = useQuery(["genre", params.id], () =>
+    getGenre(params.id)
+  );
 
   const refId = useRef();
 
-  useEffect(() => {
-    const getGenre = async (name) => {
-      const genre = await api.getGenre(name);
-      setGenre(genre);
-    };
-
-    getGenre(params.name);
-  }, [params.name]);
-
-  const onPlay = async (id) => {
-    const tracks = await api.getTracksByAlbum(id);
+  const onPlayAlbum = async (id) => {
+    const tracks = await getTracksByAlbum(id);
     addTracksAndPlay(tracks);
   };
 
@@ -43,16 +46,22 @@ export const GenreView = function () {
   const onSave = async (name) => {
     setIsPlaylistModalOpen(false);
     if (modalType === "playlist") {
-      const tracks = await api.getTracksByAlbum(refId.current);
-      await api.addToPlaylist(name, tracks);
+      const tracks = await getTracksByAlbum(refId.current);
+      await addToPlaylist(name, tracks);
     } else {
-      await api.addToAlbumlist(name, refId.current);
+      await addToAlbumlist(name, refId.current);
     }
   };
 
+  const onPlay = async () => {
+    const tracks = await getTracksByGenre(params.id);
+    addTracksAndPlay(tracks);
+  };
+
   return (
-    <div className="GenreView">
-      {genre && (
+    <div className={clsx("GenreView", { isLoading })}>
+      {isLoading && <Spinner size={32} />}
+      {!isLoading && (
         <Fragment>
           <AddListModal
             type={modalType}
@@ -61,7 +70,12 @@ export const GenreView = function () {
             onSave={onSave}
           />
 
-          <AvatarHeader className="header" type="genre" name={genre.name} />
+          <AvatarHeader
+            className="header"
+            type="genre"
+            name={genre.name}
+            onPlay={onPlay}
+          />
 
           <Divider />
 
@@ -71,9 +85,8 @@ export const GenreView = function () {
             type="box"
             title="name"
             subtitle="artist"
-            id="id"
             onOpen={(id) => navigate(`/album/${id}`)}
-            onPlay={onPlay}
+            onPlay={onPlayAlbum}
             onAddToPlaylist={(id) => onOpenListModal("playlist", id)}
             onAddToAlbumlist={(id) => onOpenListModal("albumlist", id)}
           />

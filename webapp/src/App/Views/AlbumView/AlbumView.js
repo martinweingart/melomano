@@ -1,34 +1,30 @@
 import "./AlbumView.scss";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import clsx from "clsx";
 import {
   AlbumHeader,
   Tracklist,
   Divider,
   AddListModal,
+  Spinner,
 } from "../../../Components";
-import * as api from "../../../Services/api";
+import { getAlbum, addToPlaylist } from "../../../Services/api";
 
 export const AlbumView = function () {
   const params = useParams();
-  const [album, setAlbum] = useState();
   const queryClient = useQueryClient();
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
   const [selectedTrack, setSelectedTrack] = useState();
 
-  useEffect(() => {
-    const getAlbum = async (id) => {
-      const album = await api.getAlbum(id);
-      setAlbum(album);
-    };
-
-    getAlbum(params.albumid);
-  }, [params.albumid]);
+  const { isLoading, data: album } = useQuery(["album", params.albumid], () =>
+    getAlbum(params.albumid)
+  );
 
   const onAddToPlaylist = async (name) => {
     setIsPlaylistModalOpen(false);
-    const isNewPlaylist = await api.addToPlaylist(name, [selectedTrack]);
+    const isNewPlaylist = await addToPlaylist(name, [selectedTrack]);
     if (isNewPlaylist) {
       queryClient.setQueryData(["playlists"], (oldList) => [
         ...oldList,
@@ -38,7 +34,7 @@ export const AlbumView = function () {
   };
 
   return (
-    <div className="AlbumView">
+    <div className={clsx("AlbumView", { isLoading })}>
       <AddListModal
         type="playlist"
         isOpen={isPlaylistModalOpen}
@@ -46,7 +42,8 @@ export const AlbumView = function () {
         onSave={onAddToPlaylist}
       />
 
-      {album && (
+      {isLoading && <Spinner size={32} />}
+      {!isLoading && (
         <Fragment>
           <AlbumHeader className="header" {...album} />
           <Divider />

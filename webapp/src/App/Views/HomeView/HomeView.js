@@ -85,7 +85,6 @@ export const HomeView = function () {
                 type="box"
                 title="name"
                 subtitle="artist"
-                id="id"
                 onOpen={(id) => navigate(`/album/${id}`)}
                 onPlay={onPlay}
                 onAddToPlaylist={(id) => onOpenListModal("playlist", id)}

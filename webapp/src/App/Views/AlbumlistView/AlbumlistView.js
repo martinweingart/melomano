@@ -1,31 +1,34 @@
 import "./AlbumlistView.scss";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { AvatarHeader, Divider, ListRender } from "../../../Components";
-import * as api from "../../../Services/api";
+import { useQuery } from "@tanstack/react-query";
+import clsx from "clsx";
+import {
+  AvatarHeader,
+  Divider,
+  ListRender,
+  Spinner,
+} from "../../../Components";
+import { getAlbumlist, removeAlbumlist } from "../../../Services/api";
 
 export const AlbumlistView = function () {
   const navigate = useNavigate();
   const params = useParams();
-  const [albumlist, setAlbumlist] = useState();
 
-  useEffect(() => {
-    const getAlbumlist = async (name) => {
-      const albumlist = await api.getAlbumlist(name);
-      setAlbumlist(albumlist);
-    };
-
-    getAlbumlist(params.name);
-  }, [params.name]);
+  const { isLoading, data: albumlist } = useQuery(
+    ["albumlist", params.id],
+    () => getAlbumlist(params.id)
+  );
 
   const onRemove = async () => {
-    await api.removeAlbumlist(albumlist.name);
+    await removeAlbumlist(albumlist.name);
     navigate("/", { replace: true });
   };
 
   return (
-    <div className="AlbumlistView">
-      {albumlist && (
+    <div className={clsx("AlbumlistView", { isLoading })}>
+      {isLoading && <Spinner size={32} />}
+      {!isLoading && (
         <Fragment>
           <AvatarHeader
             className="header"
@@ -42,7 +45,6 @@ export const AlbumlistView = function () {
             type="box"
             title="name"
             subtitle="artist"
-            id="id"
             onOpen={(id) => navigate(`/album/${id}`)}
           />
         </Fragment>

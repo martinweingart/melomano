@@ -2,7 +2,7 @@ const joi = require("joi");
 const express = require("express");
 const router = express.Router();
 const db = require("../../db");
-const { validateQuery } = require("../../utils");
+const { validateQuery, decodeId } = require("../../utils");
 
 const querySchema = joi.object({
   qname: joi.string(),
@@ -19,8 +19,8 @@ router.get("/", (req, res) => {
   res.json(genres);
 });
 
-router.get("/:name", (req, res) => {
-  const genre = db.files.getGenreByName(req.params.name);
+router.get("/:id", (req, res) => {
+  const genre = db.files.getGenreByName(decodeId(req.params.id));
   if (!genre) {
     res.status(404).send();
   } else {
@@ -28,8 +28,14 @@ router.get("/:name", (req, res) => {
   }
 });
 
-router.get("/:name/tracks", (req, res) => {
-  res.json(db.files.getTracksByGenre(req.params.name));
+router.get("/:id/tracks", (req, res) => {
+  const name = decodeId(req.params.id);
+  const genre = db.files.getGenreByName(name);
+  if (!genre) {
+    res.status(404).send();
+  } else {
+    res.json(db.files.getTracksByGenre(name));
+  }
 });
 
 module.exports = router;

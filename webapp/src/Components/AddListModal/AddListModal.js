@@ -7,8 +7,8 @@ import { getPlaylists, getAlbumlists } from "../../Services/api";
 export function AddListModal({ isOpen, type, onSave, onClose }) {
   const [value, setValue] = useState("");
 
-  const { data: playlists } = useQuery(["playlists"], getPlaylists);
-  const { data: albumlists } = useQuery(["albumlists"], getAlbumlists);
+  const { data: playlists } = useQuery("playlists", getPlaylists);
+  const { data: albumlists } = useQuery("albumlists", getAlbumlists);
 
   useEffect(() => {
     if (!isOpen) {
