@@ -27,13 +27,13 @@ export function ListRenderItem({
   return (
     <li className={clsx("ListRenderItem", { isAvatar })}>
       {isAvatar ? (
-        <Avatar name={title} />
+        <Avatar name={title} onClick={() => onOpen(id)} />
       ) : (
         <img src={image || noAlbum} alt={title} />
       )}
 
       <div className="ListRenderItem-content">
-        <div className="ListRenderItem-info">
+        <div className="ListRenderItem-info" onClick={() => onOpen(id)}>
           <span className="ListRenderItem-title">{title}</span>
           <span className="ListRenderItem-subtitle">{subtitle}</span>
         </div>
