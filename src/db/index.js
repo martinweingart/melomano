@@ -14,7 +14,7 @@ module.exports.init = async function () {
   return new Promise((resolve, reject) => {
     db = new loki(path.join(config.dbStorage, "melomano.db"), {
       autosave: true,
-      autosaveInterval: 5000,
+      autosaveInterval: 1000,
     });
 
     db.loadDatabase({}, (err) => {
@@ -32,6 +32,16 @@ module.exports.init = async function () {
 
       resolve();
     });
+  });
+};
+
+module.exports.save = function (name) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      if (!db) reject("No database");
+      db.saveDatabase();
+      resolve();
+    }, 3000);
   });
 };
 

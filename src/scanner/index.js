@@ -56,13 +56,13 @@ module.exports.start = async function (directory) {
             filepath: { $eq: filePath },
           });
 
-          if (!fileDB) {
+          if (!fileDB || fileDB.mtime != stat.mtime.toISOString()) {
             const { picture, ...data } = await parseFile(filePath);
 
             const hasArt = picture && picture.length > 0;
             let albumArtFilename;
 
-            if (hasArt) {
+            if ((!fileDB || !fileDB.album_art_filename) && hasArt) {
               try {
                 albumArtFilename = saveAlbumArt(picture[0]);
               } catch (e) {
@@ -79,7 +79,8 @@ module.exports.start = async function (directory) {
               ...data,
             });
           } else {
-            filesCollection.update({ ...fileDB, scan_id: scanId });
+            fileDB.scan_id = scanId;
+            filesCollection.update(fileDB);
           }
         }
       }
@@ -97,5 +98,6 @@ module.exports.start = async function (directory) {
     .find({ scan_id: { $ne: scanId } })
     .remove();
 
+  await db.save();
   console.log("Finish scan: ", new Date().toISOString());
 };
