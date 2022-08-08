@@ -12,7 +12,7 @@ import { ListView } from "../ListView/ListView";
 export const PlaylistsView = function () {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { addTracksAndPlay } = useContext(ContextPlayer);
+  const { addTracks, addTracksAndPlay } = useContext(ContextPlayer);
   const [filter, setFilter] = useState("");
 
   const { isLoading, data } = useQuery(["playlists", { filter }], () =>
@@ -22,6 +22,11 @@ export const PlaylistsView = function () {
   const onPlay = async (name) => {
     const tracks = await getTracksByPlaylist(name);
     addTracksAndPlay(tracks);
+  };
+
+  const onQueue = async (name) => {
+    const tracks = await getTracksByPlaylist(name);
+    addTracks(tracks);
   };
 
   const onRemove = async (name) => {
@@ -41,6 +46,7 @@ export const PlaylistsView = function () {
       onFilter={(value) => setFilter(value)}
       onOpen={(name) => navigate(`/playlist/${name}`)}
       onPlay={onPlay}
+      onQueue={onQueue}
       onRemove={onRemove}
     />
   );

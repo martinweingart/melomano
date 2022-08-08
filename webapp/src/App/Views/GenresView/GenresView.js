@@ -13,7 +13,7 @@ import { AddListModal } from "../../../Components";
 export const GenresView = function () {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { addTracksAndPlay } = useContext(ContextPlayer);
+  const { addTracksAndPlay, addTracks } = useContext(ContextPlayer);
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
   const [filter, setFilter] = useState("");
   const refId = useRef();
@@ -21,6 +21,11 @@ export const GenresView = function () {
   const onPlay = async (name) => {
     const tracks = await getTracksByGenre(name);
     addTracksAndPlay(tracks);
+  };
+
+  const onQueue = async (name) => {
+    const tracks = await getTracksByGenre(name);
+    addTracks(tracks);
   };
 
   const onAddToPlaylist = async (name) => {
@@ -86,6 +91,7 @@ export const GenresView = function () {
         onFilter={(value) => setFilter(value)}
         onOpen={(name) => navigate(`/genre/${name}`)}
         onPlay={onPlay}
+        onQueue={onQueue}
         onAddToPlaylist={(id) => {
           setIsPlaylistModalOpen(true);
           refId.current = id;

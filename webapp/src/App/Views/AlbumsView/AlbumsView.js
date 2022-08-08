@@ -14,7 +14,7 @@ import {
 export const AlbumsView = function () {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { addTracksAndPlay } = useContext(ContextPlayer);
+  const { addTracksAndPlay, addTracks } = useContext(ContextPlayer);
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
   const [modalType, setModalType] = useState("playlist");
   const [filter, setFilter] = useState("");
@@ -24,6 +24,11 @@ export const AlbumsView = function () {
   const onPlay = async (id) => {
     const tracks = await getTracksByAlbum(id);
     addTracksAndPlay(tracks);
+  };
+
+  const onQueue = async (id) => {
+    const tracks = await getTracksByAlbum(id);
+    addTracks(tracks);
   };
 
   const onOpenListModal = (type, id) => {
@@ -105,6 +110,7 @@ export const AlbumsView = function () {
         onScrollBottom={onScrollBottom}
         onFilter={(value) => setFilter(value)}
         onOpen={(id) => navigate(`/album/${id}`)}
+        onQueue={onQueue}
         onPlay={onPlay}
         onAddToPlaylist={(id) => onOpenListModal("playlist", id)}
         onAddToAlbumlist={(id) => onOpenListModal("albumlist", id)}

@@ -25,6 +25,7 @@ export const DrawerQueue = function ({ isOpen, onClose }) {
 
   const onClear = () => {
     clearQueue();
+    onClose();
   };
 
   return (

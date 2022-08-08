@@ -13,7 +13,7 @@ import { AddListModal } from "../../../Components";
 export const ArtistsView = function () {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const { addTracksAndPlay } = useContext(ContextPlayer);
+  const { addTracksAndPlay, addTracks } = useContext(ContextPlayer);
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
   const [filter, setFilter] = useState("");
 
@@ -22,6 +22,11 @@ export const ArtistsView = function () {
   const onPlay = async (name) => {
     const tracks = await getTracksByArtist(name);
     addTracksAndPlay(tracks);
+  };
+
+  const onQueue = async (name) => {
+    const tracks = await getTracksByArtist(name);
+    addTracks(tracks);
   };
 
   const onAddToPlaylist = async (name) => {
@@ -87,6 +92,7 @@ export const ArtistsView = function () {
         onFilter={(value) => setFilter(value)}
         onOpen={(id) => navigate(`/artist/${id}`)}
         onPlay={onPlay}
+        onQueue={onQueue}
         onAddToPlaylist={(id) => {
           setIsPlaylistModalOpen(true);
           refId.current = id;

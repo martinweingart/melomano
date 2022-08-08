@@ -13,7 +13,7 @@ import { ContextPlayer } from "../../../Context/ContextPlayer";
 
 export const HomeView = function () {
   const navigate = useNavigate();
-  const { addTracksAndPlay } = useContext(ContextPlayer);
+  const { addTracksAndPlay, addTracks } = useContext(ContextPlayer);
   const [isLoading, setIsLoading] = useState(true);
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
   const [modalType, setModalType] = useState("playlist");
@@ -37,6 +37,11 @@ export const HomeView = function () {
   const onPlay = async (id) => {
     const tracks = await api.getTracksByAlbum(id);
     addTracksAndPlay(tracks);
+  };
+
+  const onQueue = async (id) => {
+    const tracks = await api.getTracksByAlbum(id);
+    addTracks(tracks);
   };
 
   const onOpenListModal = (type, id) => {
@@ -87,6 +92,7 @@ export const HomeView = function () {
                 subtitle="artist"
                 onOpen={(id) => navigate(`/album/${id}`)}
                 onPlay={onPlay}
+                onQueue={onQueue}
                 onAddToPlaylist={(id) => onOpenListModal("playlist", id)}
                 onAddToAlbumlist={(id) => onOpenListModal("albumlist", id)}
               />

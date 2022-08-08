@@ -51,6 +51,10 @@ export function ContextPlayerProvider({ children }) {
     setQueue(tracks);
   };
 
+  const addTracks = (tracks) => {
+    setQueue((queue) => [...queue, ...tracks]);
+  };
+
   const removeTrack = async (index) => {
     if (index === currentTrackIndex) {
       audio.pause();
@@ -176,6 +180,7 @@ export function ContextPlayerProvider({ children }) {
         togglePlay,
         playerMode,
         togglePlayerMode,
+        addTracks,
         addTracksAndPlay,
         addTrack,
         removeTrack,

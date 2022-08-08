@@ -6,6 +6,7 @@ import {
   MdPlaylistAdd,
   MdAlbum,
   MdClose,
+  MdQueueMusic,
 } from "react-icons/md";
 import noAlbum from "../../../Images/album.jpg";
 import { Avatar, IconButton } from "../../Base";
@@ -18,6 +19,7 @@ export function ListRenderItem({
   image,
   onOpen,
   onPlay,
+  onQueue,
   onAddToPlaylist,
   onAddToAlbumlist,
   onRemove,
@@ -48,6 +50,12 @@ export function ListRenderItem({
           {onPlay && (
             <IconButton size={16} onClick={() => onPlay(id)}>
               <MdOutlinePlayCircleOutline />
+            </IconButton>
+          )}
+
+          {onQueue && (
+            <IconButton size={16} onClick={() => onQueue(id)}>
+              <MdQueueMusic />
             </IconButton>
           )}
 

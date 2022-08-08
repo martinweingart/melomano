@@ -22,7 +22,7 @@ import {
 export const GenreView = function () {
   const navigate = useNavigate();
   const params = useParams();
-  const { addTracksAndPlay } = useContext(ContextPlayer);
+  const { addTracksAndPlay, addTracks } = useContext(ContextPlayer);
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
   const [modalType, setModalType] = useState("playlist");
 
@@ -35,6 +35,11 @@ export const GenreView = function () {
   const onPlayAlbum = async (id) => {
     const tracks = await getTracksByAlbum(id);
     addTracksAndPlay(tracks);
+  };
+
+  const onQueueAlbum = async (id) => {
+    const tracks = await getTracksByAlbum(id);
+    addTracks(tracks);
   };
 
   const onOpenListModal = (type, id) => {
@@ -58,6 +63,11 @@ export const GenreView = function () {
     addTracksAndPlay(tracks);
   };
 
+  const onQueue = async () => {
+    const tracks = await getTracksByGenre(params.id);
+    addTracks(tracks);
+  };
+
   return (
     <div className={clsx("GenreView", { isLoading })}>
       {isLoading && <Spinner size={32} />}
@@ -75,6 +85,7 @@ export const GenreView = function () {
             type="genre"
             name={genre.name}
             onPlay={onPlay}
+            onQueue={onQueue}
           />
 
           <Divider />
@@ -87,6 +98,7 @@ export const GenreView = function () {
             subtitle="artist"
             onOpen={(id) => navigate(`/album/${id}`)}
             onPlay={onPlayAlbum}
+            onQueue={onQueueAlbum}
             onAddToPlaylist={(id) => onOpenListModal("playlist", id)}
             onAddToAlbumlist={(id) => onOpenListModal("albumlist", id)}
           />

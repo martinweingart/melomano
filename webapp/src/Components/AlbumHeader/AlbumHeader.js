@@ -6,6 +6,7 @@ import {
   MdOutlinePlayCircleOutline,
   MdPlaylistAdd,
   MdAlbum,
+  MdQueueMusic,
 } from "react-icons/md";
 import noAlbum from "../../Images/album.jpg";
 import { getImageUrl } from "../../Services/media";
@@ -28,7 +29,7 @@ export const AlbumHeader = function ({
   image,
   onOpen,
 }) {
-  const { addTracksAndPlay } = useContext(ContextPlayer);
+  const { addTracksAndPlay, addTracks } = useContext(ContextPlayer);
   const [isPlaylistModalOpen, setIsPlaylistModalOpen] = useState(false);
   const [modalType, setModalType] = useState("playlist");
 
@@ -37,6 +38,11 @@ export const AlbumHeader = function ({
   const onPlay = async () => {
     const tracks = await getTracksByAlbum(id);
     addTracksAndPlay(tracks);
+  };
+
+  const onQueue = async () => {
+    const tracks = await getTracksByAlbum(id);
+    addTracks(tracks);
   };
 
   const onSave = async (name) => {
@@ -83,6 +89,17 @@ export const AlbumHeader = function ({
           <IconButton label="Play" size={16} fontSize={10} onClick={onPlay}>
             <MdOutlinePlayCircleOutline />
           </IconButton>
+
+          {onQueue && (
+            <IconButton
+              label="Add to queue"
+              size={16}
+              fontSize={10}
+              onClick={onQueue}
+            >
+              <MdQueueMusic />
+            </IconButton>
+          )}
 
           <IconButton
             label="Add to playlist"
