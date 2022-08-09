@@ -17,10 +17,8 @@ module.exports.init = async function () {
       autosaveInterval: 1000,
     });
 
-    db.loadDatabase({}, (err) => {
-      if (err) {
-        reject("Error loading database");
-      }
+    db.loadDatabase({}, (error) => {
+      if (error) reject("Error loading database");
 
       for (const name in collections) {
         collections[name] = db.getCollection(name);
@@ -38,7 +36,7 @@ module.exports.init = async function () {
 module.exports.save = function (name) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      if (!db) reject("No database");
+      if (!db) reject("Database not loaded");
       db.saveDatabase();
       resolve();
     }, 3000);

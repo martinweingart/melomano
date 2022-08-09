@@ -1,4 +1,5 @@
 const mm = require("music-metadata");
+const logger = require("../logger");
 
 module.exports.parseFile = async function (filepath) {
   const metadata = await mm.parseFile(filepath);

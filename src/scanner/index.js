@@ -6,6 +6,7 @@ const mime = require("mime-types");
 const db = require("../db");
 const { parseFile } = require("../parser");
 const { getFileExtension, isExtensionValid } = require("../utils");
+const logger = require("../logger");
 const config = require("../../config");
 
 function saveAlbumArt(picture) {
@@ -24,9 +25,13 @@ function saveAlbumArt(picture) {
 }
 
 module.exports.start = async function (directory) {
-  console.log("Starting scan: ", new Date().toISOString());
-
   const scanId = Date.now();
+
+  logger.info(
+    { time: new Date().toISOString(), scan_id: scanId },
+    "Scan started"
+  );
+
   const filesCollection = db.getCollection("files");
 
   async function walk(directory) {
@@ -40,6 +45,7 @@ module.exports.start = async function (directory) {
         try {
           stat = await fs.stat(filePath);
         } catch (error) {
+          logger.error({ error }, "Error reading audio file stats");
           continue;
         }
 
@@ -57,36 +63,42 @@ module.exports.start = async function (directory) {
           });
 
           if (!fileDB || fileDB.mtime != stat.mtime.toISOString()) {
-            const { picture, ...data } = await parseFile(filePath);
+            try {
+              const { picture, ...data } = await parseFile(filePath);
 
-            const hasArt = picture && picture.length > 0;
-            let albumArtFilename;
+              const hasArt = picture && picture.length > 0;
+              let albumArtFilename;
 
-            if ((!fileDB || !fileDB.album_art_filename) && hasArt) {
-              try {
-                albumArtFilename = saveAlbumArt(picture[0]);
-              } catch (e) {
-                console.error(e);
-                console.error("Cant save album picture: ", filePath);
+              if ((!fileDB || !fileDB.album_art_filename) && hasArt) {
+                try {
+                  albumArtFilename = saveAlbumArt(picture[0]);
+                } catch (error) {
+                  logger.error({ error }, "Error saving album art");
+                }
               }
-            }
 
-            filesCollection.insert({
-              filepath: filePath,
-              scan_id: scanId,
-              mtime: stat.mtime,
-              album_art_filename: albumArtFilename,
-              ...data,
-            });
+              filesCollection.insert({
+                filepath: filePath,
+                scan_id: scanId,
+                mtime: stat.mtime,
+                album_art_filename: albumArtFilename,
+                ...data,
+              });
+            } catch (error) {
+              logger.error(
+                { error },
+                "Error while parsing audio file metadata"
+              );
+              continue;
+            }
           } else {
             fileDB.scan_id = scanId;
             filesCollection.update(fileDB);
           }
         }
       }
-    } catch (e) {
-      console.error(e);
-      console.error("Cant read directory: ", directory);
+    } catch (error) {
+      logger.error({ error }, "Error reading directory");
     }
   }
 
@@ -98,6 +110,14 @@ module.exports.start = async function (directory) {
     .find({ scan_id: { $ne: scanId } })
     .remove();
 
-  await db.save();
-  console.log("Finish scan: ", new Date().toISOString());
+  try {
+    await db.save();
+  } catch (error) {
+    logger.error("Error trying to save database");
+  }
+
+  logger.info(
+    { time: new Date().toISOString(), scan_id: scanId },
+    "Scan finished"
+  );
 };
