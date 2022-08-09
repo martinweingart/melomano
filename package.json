@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --ignore ./webapp ./scripts/serve.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron ./electron/index.js",
+    "serve": "nodemon --ignore ./webapp ./scripts/serve.js",
     "scan": "node ./scripts/scan.js",
     "build": "npm install; (cd webapp && npm install && npm run build);"
   },
@@ -26,6 +26,7 @@
     "pino": "^8.4.0"
   },
   "devDependencies": {
+    "electron": "^20.0.1",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1",
     "sass": "^1.54.0"
