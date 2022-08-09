@@ -1,4 +1,10 @@
 node_modules
-/images
+/images/**
+/logs/**
 *.db
 /config.js
+
+!/images/*/
+!/images/**/*.gitkeep
+
+!/logs/.gitkeep

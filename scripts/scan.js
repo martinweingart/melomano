@@ -1,5 +1,5 @@
-const db = require("./db");
-const { start } = require("./scanner");
+const db = require("../src/db");
+const { start } = require("../src/scanner");
 const config = require("../config");
 
 async function main() {

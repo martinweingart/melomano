@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --ignore ./webapp ./src/serve.js",
+    "start": "nodemon --ignore ./webapp ./scripts/serve.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "scan": "node ./src/scan.js",
+    "scan": "node ./scripts/scan.js",
     "build": "npm install; (cd webapp && npm install && npm run build);"
   },
   "keywords": [
@@ -22,7 +22,8 @@
     "joi": "^17.6.0",
     "lokijs": "^1.5.12",
     "mime-types": "^2.1.35",
-    "music-metadata": "^7.12.4"
+    "music-metadata": "^7.12.4",
+    "pino": "^8.4.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.19",
