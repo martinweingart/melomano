@@ -11,5 +11,6 @@ contextBridge.exposeInMainWorld("electronAPI", {
   getStatus: () => ipcRenderer.invoke("status:get"),
   onStatusChange: (callback) => ipcRenderer.on("status:change", callback),
   scan: () => ipcRenderer.send("scan"),
+  hide: () => ipcRenderer.send("hide"),
   shutDown: () => ipcRenderer.send("shut-down"),
 });

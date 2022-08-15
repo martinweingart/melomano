@@ -1,7 +1,16 @@
 const { fork } = require("child_process");
 const path = require("path");
 const fs = require("fs/promises");
-const { app, BrowserWindow, ipcMain, shell, dialog } = require("electron");
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  shell,
+  dialog,
+  Tray,
+  nativeImage,
+  Menu,
+} = require("electron");
 const {
   readConfig,
   saveConfig,
@@ -57,6 +66,18 @@ async function createStorageFolder() {
 }
 
 app.whenReady().then(async () => {
+  const icon = nativeImage.createFromPath(path.join(__dirname, "favicon.ico"));
+  tray = new Tray(icon);
+
+  const contextMenu = Menu.buildFromTemplate([
+    { label: "Open", type: "normal", click: () => mainWin.show() },
+    { label: "Shut down", type: "normal", click: () => app.quit() },
+  ]);
+
+  tray.setContextMenu(contextMenu);
+  tray.setToolTip("Melomano");
+  tray.setTitle("Melomano");
+
   await createStorageFolder();
   const config = await readConfig();
   const mainWin = createWindow();
@@ -106,6 +127,8 @@ app.whenReady().then(async () => {
   );
 
   ipcMain.on("shut-down", async () => app.quit());
+
+  ipcMain.on("hide", async () => mainWin.hide());
 
   mainWin.once("ready-to-show", () => {
     startServer(mainWin);

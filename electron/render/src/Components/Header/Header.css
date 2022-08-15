@@ -37,7 +37,3 @@
 .header nav a.active {
   background: rgba(0, 0, 0, 0.4);
 }
-
-.header nav a:last-of-type {
-  margin-top: auto;
-}

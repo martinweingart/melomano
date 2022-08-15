@@ -21,6 +21,10 @@ export default function App() {
     window.electronAPI.onStatusChange((_event, status) => setStatus(status));
   }, []);
 
+  const onClose = () => {
+    window.electronAPI.hide();
+  };
+
   const onShutDown = () => {
     window.electronAPI.shutDown();
   };
@@ -31,6 +35,7 @@ export default function App() {
         <Status.Provider value={status}>
           <Header
             onChange={(newView) => setView(newView)}
+            onClose={onClose}
             onShutDown={onShutDown}
           />
           {view === "server" && <Server />}
