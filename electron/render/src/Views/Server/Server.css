@@ -1,0 +1,33 @@
+.server {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.server .status {
+  display: flex;
+  padding-top: 24px;
+  justify-content: space-between;
+}
+
+.server .status > p {
+  margin: 0;
+}
+
+.server .host {
+  display: flex;
+  gap: 4px;
+}
+
+.server .host .hostname {
+  flex: 1;
+}
+
+.server .host .port {
+  width: 70px;
+}
+
+.server > footer {
+  display: flex;
+  justify-content: space-between;
+}

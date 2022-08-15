@@ -1,13 +1,13 @@
 {
   "name": "melomano",
   "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Local music server",
+  "main": "e/index.js",
   "scripts": {
-    "start": "electron ./electron/index.js",
+    "start": "set DEV_MODE=true && electron ./electron/index.js",
     "serve": "nodemon --ignore ./webapp ./scripts/serve.js",
     "scan": "node ./scripts/scan.js",
-    "build": "npm install; (cd webapp && npm install && npm run build);"
+    "build": "node ./scripts/build.js"
   },
   "keywords": [
     "music",
@@ -16,9 +16,12 @@
   "author": "Martin Weingart",
   "license": "MIT",
   "dependencies": {
+    "asar": "^3.2.0",
+    "axios": "^0.27.2",
     "body-parser": "^1.20.0",
     "cors": "^2.8.5",
     "express": "^4.18.1",
+    "fs-extra": "^10.1.0",
     "joi": "^17.6.0",
     "lokijs": "^1.5.12",
     "mime-types": "^2.1.35",
@@ -28,7 +31,6 @@
   "devDependencies": {
     "electron": "^20.0.1",
     "nodemon": "^2.0.19",
-    "prettier": "^2.7.1",
-    "sass": "^1.54.0"
+    "prettier": "^2.7.1"
   }
 }
