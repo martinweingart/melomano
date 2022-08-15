@@ -1,15 +1,21 @@
-const db = require("../src/db");
+const { readConfig } = require("../shared/config");
 const { start } = require("../src/scanner");
-const config = require("../config");
 
-async function main() {
-  await db.init();
+(async function () {
+  let status = "Starting";
+  process.send(status);
 
-  for (let folder of config.folders) {
-    await start(folder);
+  process.on("status:get", () => process.send(status));
+
+  try {
+    const config = await readConfig();
+    status = "Running";
+    process.send(status);
+    await start(config);
+    status = "Finished";
+    process.send(status);
+  } catch (e) {
+    status = "Failed";
+    process.send(status);
   }
-
-  process.exit(1);
-}
-
-main();
+})();
