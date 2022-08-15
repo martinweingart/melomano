@@ -1,6 +1,6 @@
 const path = require("path");
 const loki = require("lokijs");
-const config = require("../../config");
+const storage = require("../storage");
 
 let db;
 
@@ -12,9 +12,9 @@ let collections = {
 
 module.exports.init = async function () {
   return new Promise((resolve, reject) => {
-    db = new loki(path.join(config.dbStorage, "melomano.db"), {
+    db = new loki(path.join(storage.db, "melomano.db"), {
       autosave: true,
-      autosaveInterval: 1000,
+      autosaveInterval: 4000,
     });
 
     db.loadDatabase({}, (error) => {
@@ -33,14 +33,8 @@ module.exports.init = async function () {
   });
 };
 
-module.exports.save = function (name) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (!db) reject("Database not loaded");
-      db.saveDatabase();
-      resolve();
-    }, 3000);
-  });
+module.exports.save = function () {
+  db.saveDatabase();
 };
 
 module.exports.getCollection = function (name) {

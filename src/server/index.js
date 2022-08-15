@@ -6,45 +6,56 @@ const app = express();
 const db = require("../db");
 const api = require("./api");
 const media = require("./media");
-const config = require("../../config");
 const logger = require("../logger");
 
-module.exports.start = async function () {
-  try {
-    await db.init();
-  } catch (error) {
-    logger.error(error);
-  }
+let server;
 
-  try {
-    app.use(cors());
-    app.use(bodyParser.json());
+module.exports.start = function (config) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await db.init();
+    } catch (error) {
+      logger.error(error);
+      reject(error);
+    }
 
-    app.use("/media", media);
-    app.use("/api", api);
+    try {
+      app.use(cors());
+      app.use(bodyParser.json());
 
-    app.use("/", express.static(path.join(__dirname, "../..", "webapp/build")));
+      app.use("/media", media);
+      app.use("/api", api);
 
-    app.use((error, req, res, next) => {
-      logger.error({
-        errorStack: error.stack,
-        request: {
-          path: req.path,
-          method: req.method,
-          params: req.params,
-          query: req.query,
-          body: req.body,
-        },
+      app.use("/", express.static(path.join(__dirname, "../..", "webapp")));
+
+      app.use((error, req, res) => {
+        logger.error({
+          errorStack: error.stack,
+          request: {
+            path: req.path,
+            method: req.method,
+            params: req.params,
+            query: req.query,
+            body: req.body,
+          },
+        });
+        res.status(500).send("Internal Server Error");
       });
-      res.status(500).send("Internal Server Error");
-    });
 
-    app.listen(config.port, config.host, () => {
-      logger.info(
-        `Music stream app listening on http://${config.host}:${config.port}`
-      );
-    });
-  } catch (error) {
-    logger.error({ error }, "Error while starting server");
-  }
+      server = app.listen(config.port, config.host, () => {
+        logger.info(
+          `Music stream app listening on http://${config.host}:${config.port}`
+        );
+        setTimeout(() => resolve(), 3000);
+      });
+
+      server.on("error", (error) => {
+        logger.error({ error: error.stack }, "Error while starting server");
+        reject(error);
+      });
+    } catch (error) {
+      logger.error({ error: error.stack }, "Error while starting server");
+      reject(error);
+    }
+  });
 };

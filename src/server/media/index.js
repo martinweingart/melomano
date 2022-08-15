@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const tracks = require("./tracks");
-const config = require("../../../config");
+const storage = require("../../storage");
 
-router.use("/images/albums", express.static(config.albumArtFolder));
+router.use("/images/albums", express.static(storage.albumArtFolder));
 router.use("/tracks", tracks);
 
 module.exports = router;
