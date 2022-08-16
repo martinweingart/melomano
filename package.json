@@ -2,7 +2,7 @@
   "name": "melomano",
   "version": "0.1.0",
   "description": "Local music server",
-  "main": "e/index.js",
+  "main": "electron/index.js",
   "scripts": {
     "start": "set DEV_MODE=true && electron ./electron/index.js",
     "serve": "nodemon --ignore ./webapp ./scripts/serve.js",

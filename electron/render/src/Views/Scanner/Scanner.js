@@ -48,18 +48,10 @@ const Scanner = () => {
     }
   };
 
-  const onOpenLog = () => {
-    window.electronAPI.openLog();
-  };
-
   return (
     <div class="scanner">
       <div class="status">
         <p>Scanner status: {status?.scanner ? status.scanner : "-"}</p>
-
-        <a href="" onClick={onOpenLog}>
-          Open log
-        </a>
       </div>
 
       <h3>Folders</h3>

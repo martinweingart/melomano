@@ -1,7 +1,6 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("electronAPI", {
-  openLog: () => ipcRenderer.send("open-log"),
   showMessage: (msg) => ipcRenderer.send("dialog:message", msg),
   addFolder: () => ipcRenderer.invoke("folder:add"),
   removeFolder: (path) => ipcRenderer.invoke("folder:remove", path),

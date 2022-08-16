@@ -4,7 +4,6 @@ const { start } = require("../src/scanner");
 (async function () {
   let status = "Starting";
   process.send(status);
-
   process.on("status:get", () => process.send(status));
 
   try {

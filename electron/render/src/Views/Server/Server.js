@@ -33,10 +33,6 @@ const Server = () => {
     setLoading(false);
   };
 
-  const onOpenLog = () => {
-    window.electronAPI.openLog();
-  };
-
   const isConfigChanged =
     config && (config.host !== hostname || config.port !== port);
 
@@ -44,10 +40,6 @@ const Server = () => {
     <div class="server">
       <div class="status">
         <p>Server status: {status ? status.server : ""}</p>
-
-        <a href="" onClick={onOpenLog}>
-          Open log
-        </a>
       </div>
 
       <div class="host">

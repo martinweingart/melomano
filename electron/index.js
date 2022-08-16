@@ -5,7 +5,6 @@ const {
   app,
   BrowserWindow,
   ipcMain,
-  shell,
   dialog,
   Tray,
   nativeImage,
@@ -58,6 +57,20 @@ const createWindow = () => {
   return win;
 };
 
+const createTray = (win) => {
+  const icon = nativeImage.createFromPath(path.join(__dirname, "favicon.ico"));
+  tray = new Tray(icon);
+
+  const contextMenu = Menu.buildFromTemplate([
+    { label: "Open", type: "normal", click: () => win.show() },
+    { label: "Shut down", type: "normal", click: () => app.quit() },
+  ]);
+
+  tray.setContextMenu(contextMenu);
+  tray.setToolTip("Melomano");
+  tray.setTitle("Melomano");
+};
+
 async function createStorageFolder() {
   await fs.mkdir(path.join(__dirname, "../storage/logs"), { recursive: true });
   await fs.mkdir(path.join(__dirname, "../storage/images/albums"), {
@@ -66,25 +79,11 @@ async function createStorageFolder() {
 }
 
 app.whenReady().then(async () => {
-  const icon = nativeImage.createFromPath(path.join(__dirname, "favicon.ico"));
-  tray = new Tray(icon);
-
-  const contextMenu = Menu.buildFromTemplate([
-    { label: "Open", type: "normal", click: () => mainWin.show() },
-    { label: "Shut down", type: "normal", click: () => app.quit() },
-  ]);
-
-  tray.setContextMenu(contextMenu);
-  tray.setToolTip("Melomano");
-  tray.setTitle("Melomano");
-
   await createStorageFolder();
   const config = await readConfig();
   const mainWin = createWindow();
 
-  ipcMain.on("open-log", () => {
-    shell.openPath(path.resolve(__dirname, "../storage/logs/melomano.log"));
-  });
+  createTray(mainWin);
 
   ipcMain.handle("folder:add", async () => {
     const { canceled, filePaths } = await dialog.showOpenDialog(mainWin, {

@@ -9,10 +9,26 @@ async function main() {
   await fs.mkdir(buildDir, { recursive: true });
 
   fsExtra.emptyDirSync(buildDir);
+  fsExtra.removeSync(path.join(__dirname, "../app.asar"));
+
+  await fsExtra.copy(
+    path.join(__dirname, "../package.json"),
+    path.join(buildDir, "package.json")
+  );
 
   await fsExtra.copy(
     path.join(__dirname, "../src"),
     path.join(buildDir, "src")
+  );
+
+  await fsExtra.copy(
+    path.join(__dirname, "../shared"),
+    path.join(buildDir, "shared")
+  );
+
+  await fsExtra.copy(
+    path.join(__dirname, "../scripts"),
+    path.join(buildDir, "scripts")
   );
 
   execSync("npm i", {
@@ -38,6 +54,11 @@ async function main() {
     path.join(buildDir, "electron/preload.js")
   );
 
+  await fsExtra.copy(
+    path.join(__dirname, "../electron/favicon.ico"),
+    path.join(buildDir, "electron/favicon.ico")
+  );
+
   execSync("npm i", {
     cwd: path.join(__dirname, "../electron/render"),
   });
@@ -50,6 +71,12 @@ async function main() {
     path.join(__dirname, "../electron/render/dist"),
     path.join(buildDir, "electron/render")
   );
+
+  execSync("asar pack build app.asar", {
+    cwd: path.join(__dirname, ".."),
+  });
+
+  fsExtra.removeSync(path.join(__dirname, "../build"));
 }
 
 main();

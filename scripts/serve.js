@@ -1,7 +1,7 @@
 const { readConfig } = require("../shared/config");
 const server = require("../src/server");
 
-async function main() {
+(async function main() {
   process.send("Starting");
   const config = await readConfig();
 
@@ -11,6 +11,4 @@ async function main() {
   } catch (e) {
     process.send("Failed");
   }
-}
-
-main();
+})();

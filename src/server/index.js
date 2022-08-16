@@ -46,7 +46,7 @@ module.exports.start = function (config) {
         logger.info(
           `Music stream app listening on http://${config.host}:${config.port}`
         );
-        setTimeout(() => resolve(), 3000);
+        setTimeout(() => resolve(), 1000);
       });
 
       server.on("error", (error) => {
