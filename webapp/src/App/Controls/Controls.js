@@ -1,5 +1,5 @@
 import "./Controls.scss";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import {
   MdOutlinePlaylistPlay,
   MdOutlineShuffle,

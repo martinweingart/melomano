@@ -1,5 +1,5 @@
 import "./AlbumView.scss";
-import { Fragment, useState } from "react";
+import React, { Fragment, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";

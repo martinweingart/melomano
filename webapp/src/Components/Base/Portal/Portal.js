@@ -1,5 +1,5 @@
 import "./Portal.scss";
-import { forwardRef, useRef, useEffect } from "react";
+import React, { forwardRef, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import clsx from "clsx";
 

@@ -1,4 +1,4 @@
-import { Fragment, useState, useContext, useRef } from "react";
+import React, { Fragment, useState, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { ContextPlayer } from "../../../Context/ContextPlayer";

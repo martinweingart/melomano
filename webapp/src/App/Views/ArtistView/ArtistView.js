@@ -1,5 +1,5 @@
 import "./ArtistView.scss";
-import { Fragment, useState, useRef, useContext } from "react";
+import React, { Fragment, useState, useRef, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";

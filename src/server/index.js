@@ -28,6 +28,30 @@ module.exports.start = function (config) {
 
       app.use("/", express.static(path.join(__dirname, "../..", "webapp")));
 
+      app.get(["/favicon.ico", "main.js", "*.jpg"], (req, res) => {
+        res.sendFile(
+          path.join(__dirname, "../../webapp", req.path),
+          (error) => {
+            if (error) {
+              logger.error("Error serving favicon");
+              res.status(404).send("Favicon not found");
+            }
+          }
+        );
+      });
+
+      app.get(["/", "/*"], (req, res) => {
+        res.sendFile(
+          path.join(__dirname, "../../webapp", "index.html"),
+          (error) => {
+            if (error) {
+              logger.error("Error serving webapp");
+              res.status(500).send("Internal Server Error");
+            }
+          }
+        );
+      });
+
       app.use((error, req, res) => {
         logger.error({
           errorStack: error.stack,

@@ -1,5 +1,5 @@
 import "./StatusBar.scss";
-import { Fragment, useContext } from "react";
+import React, { Fragment, useContext } from "react";
 import clsx from "clsx";
 import { ContextPlayer } from "../../Context/ContextPlayer";
 import { getDuration } from "../../Helpers";

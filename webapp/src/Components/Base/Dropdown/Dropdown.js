@@ -1,4 +1,5 @@
 import "./Dropdown.scss";
+import React from "react";
 
 export function Dropdown({ options, value, onChange }) {
   return (

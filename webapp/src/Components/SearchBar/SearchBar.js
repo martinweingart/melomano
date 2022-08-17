@@ -1,4 +1,5 @@
 import "./SearchBar.scss";
+import React from "react";
 import { MdOutlineSearch, MdClose } from "react-icons/md";
 import { IconButton } from "../Base";
 

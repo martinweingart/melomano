@@ -1,5 +1,5 @@
 import "./Autocomplete.scss";
-import { Fragment } from "react";
+import React, { Fragment } from "react";
 import { Divider } from "../Divider/Divider";
 
 export function Autocomplete({ value, options, onChange }) {

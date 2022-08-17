@@ -1,5 +1,11 @@
 import "./HomeView.scss";
-import { Fragment, useEffect, useState, useContext, useRef } from "react";
+import React, {
+  Fragment,
+  useEffect,
+  useState,
+  useContext,
+  useRef,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import clsx from "clsx";
 import {

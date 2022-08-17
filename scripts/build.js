@@ -40,7 +40,7 @@ async function main() {
   });
 
   await fsExtra.move(
-    path.join(__dirname, "../webapp/build"),
+    path.join(__dirname, "../webapp/dist"),
     path.join(buildDir, "webapp")
   );
 
@@ -72,11 +72,7 @@ async function main() {
     path.join(buildDir, "electron/render")
   );
 
-  execSync("asar pack build app.asar", {
-    cwd: path.join(__dirname, ".."),
-  });
-
-  fsExtra.removeSync(path.join(__dirname, "../build"));
+  execSync("npm i --production", { cwd: buildDir });
 }
 
 main();

@@ -1,5 +1,5 @@
 import "./IconButton.scss";
-import { cloneElement } from "react";
+import React, { cloneElement } from "react";
 import clsx from "clsx";
 
 export function IconButton({

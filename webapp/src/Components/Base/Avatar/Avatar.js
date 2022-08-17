@@ -1,4 +1,5 @@
 import "./Avatar.scss";
+import React from "react";
 
 function getInitials(name) {
   const [first, second] = name.split(" ");

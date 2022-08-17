@@ -1,4 +1,5 @@
 import "./TopBar.scss";
+import React from "react";
 import { MenuButton } from "./MenuButton/MenuButton";
 import { BackButton } from "./BackButton/BackButton";
 import { useLocation } from "react-router-dom";

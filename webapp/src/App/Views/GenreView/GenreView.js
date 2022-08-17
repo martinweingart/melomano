@@ -1,5 +1,5 @@
 import "./GenreView.scss";
-import { Fragment, useState, useContext, useRef } from "react";
+import React, { Fragment, useState, useContext, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
