@@ -2,7 +2,13 @@ const { readConfig } = require("../shared/config");
 const server = require("../src/server");
 
 (async function main() {
+  process.send("Starting");
   const config = await readConfig();
-  await server.start(config);
-  console.log(`Server running at http://${config.host}:${config.port}`);
+
+  try {
+    await server.start(config);
+    process.send("Running");
+  } catch (e) {
+    process.send("Failed");
+  }
 })();

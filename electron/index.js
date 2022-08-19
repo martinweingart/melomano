@@ -25,7 +25,7 @@ let status = {
 };
 
 function startServer(win) {
-  server_process = fork(path.join(__dirname, "../scripts/serve.js"));
+  server_process = fork(path.join(__dirname, "scripts/serve.js"));
   server_process.on("message", (value) => {
     status.server = value;
     win.webContents.send("status:change", status);
@@ -108,7 +108,7 @@ app.whenReady().then(async () => {
   ipcMain.on("restart", async () => restartServer(mainWin));
 
   ipcMain.on("scan", async () => {
-    scan_process = fork(path.join(__dirname, "../scripts/scan.js"));
+    scan_process = fork(path.join(__dirname, "scripts/scan.js"));
 
     scan_process.on("message", (value) => {
       status.scanner = value;
