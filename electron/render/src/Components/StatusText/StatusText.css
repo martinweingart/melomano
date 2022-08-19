@@ -1,0 +1,7 @@
+.Running span {
+  color: #27ae60;
+}
+
+.Failed span {
+  color: #c0392b;
+}
