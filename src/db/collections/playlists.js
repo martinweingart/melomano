@@ -16,7 +16,7 @@ module.exports.getPlaylists = function (query) {
 
   const results = playlistsCollection
     .find(dbQueryObj)
-    .map((o) => ({ id: encodeName(o.name), name: o.name }));
+    .map((o) => ({ id: encodeName(o.name), ...o }));
 
   return results;
 };

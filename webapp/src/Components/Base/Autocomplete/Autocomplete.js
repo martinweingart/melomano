@@ -4,7 +4,7 @@ import { Divider } from "../Divider/Divider";
 
 export function Autocomplete({ value, options, onChange }) {
   const optionsFiltered = options.filter((o) => {
-    return value.length < o.length && o.indexOf(value) !== -1;
+    return value.length < o.length && o.toLowerCase().indexOf(value) !== -1;
   });
 
   return (

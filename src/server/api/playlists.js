@@ -43,6 +43,20 @@ router.post("/", (req, res) => {
   }
 });
 
+router.post("/:id/add", (req, res) => {
+  const playlist = db.playlists.getPlaylistByName(decodeId(req.params.id));
+
+  if (playlist) {
+    playlist.tracks = [...playlist.tracks, ...req.body];
+    db.playlists.updatePlaylist(playlist);
+    res.status(200).json();
+  } else {
+    res.status(404).json();
+  }
+
+  res.status(200).json();
+});
+
 router.put("/:id", (req, res) => {
   const playlist = db.playlists.getPlaylistByName(decodeId(req.params.id));
 

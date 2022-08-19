@@ -16,7 +16,7 @@ module.exports.getAlbumlists = function (query) {
 
   const results = albumlistsCollection
     .find(dbQueryObj)
-    .map((o) => ({ id: encodeName(o.name), name: o.name }));
+    .map((o) => ({ id: encodeName(o.name), ...o }));
 
   return results;
 };

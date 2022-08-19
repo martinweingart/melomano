@@ -1,7 +1,7 @@
 import "./AlbumlistView.scss";
 import React, { Fragment } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
 import {
   AvatarHeader,
@@ -9,9 +9,14 @@ import {
   ListRender,
   Spinner,
 } from "../../../Components";
-import { getAlbumlist, removeAlbumlist } from "../../../Services/api";
+import {
+  getAlbumlist,
+  removeAlbumlist,
+  updateAlbumlist,
+} from "../../../Services/api";
 
 export const AlbumlistView = function () {
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const params = useParams();
 
@@ -21,8 +26,18 @@ export const AlbumlistView = function () {
   );
 
   const onRemove = async () => {
-    await removeAlbumlist(albumlist.name);
+    await removeAlbumlist(params.id);
     navigate("/", { replace: true });
+  };
+
+  const onRemoveAlbum = async (id) => {
+    const albums = albumlist.albums.filter((a) => a.id !== id).map((a) => a.id);
+    const newAlbumlist = {
+      name: albumlist.name,
+      albums,
+    };
+    await updateAlbumlist(params.id, newAlbumlist);
+    queryClient.setQueryData(["albumlist", params.id], newAlbumlist);
   };
 
   return (
@@ -46,6 +61,7 @@ export const AlbumlistView = function () {
             title="name"
             subtitle="artist"
             onOpen={(id) => navigate(`/album/${id}`)}
+            onRemove={onRemoveAlbum}
           />
         </Fragment>
       )}

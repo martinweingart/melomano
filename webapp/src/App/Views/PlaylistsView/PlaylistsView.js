@@ -29,11 +29,9 @@ export const PlaylistsView = function () {
     addTracks(tracks);
   };
 
-  const onRemove = async (name) => {
-    await removePlaylist(name);
-    queryClient.setQueryData(["playlists", { filter }], (oldList) =>
-      oldList.filter((e) => e.name !== name)
-    );
+  const onRemove = async (id) => {
+    await removePlaylist(id);
+    queryClient.invalidateQueries(["playlists"]);
   };
 
   return (

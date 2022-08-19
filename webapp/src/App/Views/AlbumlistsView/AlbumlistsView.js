@@ -9,15 +9,13 @@ export const AlbumlistsView = function () {
   const queryClient = useQueryClient();
   const [filter, setFilter] = useState("");
 
-  const { isLoading, data } = useQuery(["albumlists", { filter }], () =>
+  const { isLoading, data } = useQuery(["albumlists", filter], () =>
     getAlbumlists({ filter })
   );
 
-  const onRemove = async (name) => {
-    await removeAlbumlist(name);
-    queryClient.setQueryData(["albumlists", { filter }], (oldList) =>
-      oldList.filter((e) => e.name !== name)
-    );
+  const onRemove = async (id) => {
+    await removeAlbumlist(id);
+    queryClient.invalidateQueries(["albumlists"]);
   };
 
   return (

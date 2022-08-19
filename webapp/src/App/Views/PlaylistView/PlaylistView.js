@@ -26,12 +26,12 @@ export const PlaylistView = function () {
       tracks: removeItemFromList(playlist.tracks, index),
     };
 
-    await updatePlaylist(newPlaylist);
+    await updatePlaylist(params.id, newPlaylist);
     queryClient.setQueryData(["playlist", params.id], newPlaylist);
   };
 
   const onRemove = async () => {
-    await removePlaylist(playlist.name);
+    await removePlaylist(params.id);
     navigate("/", { replace: true });
   };
 
@@ -48,7 +48,7 @@ export const PlaylistView = function () {
           />
           <Divider />
           <Tracklist
-            className="tracklist"
+            className="list"
             tracks={playlist.tracks}
             onRemove={onRemoveTrack}
           />

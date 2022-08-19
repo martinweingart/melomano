@@ -43,6 +43,20 @@ router.post("/", (req, res) => {
   }
 });
 
+router.post("/:id/add", (req, res) => {
+  const albumlist = db.albumlists.getAlbumlistByName(decodeId(req.params.id));
+
+  if (albumlist) {
+    albumlist.albums = [...albumlist.albums, ...req.body];
+    db.albumlists.updateAlbumlist(albumlist);
+    res.status(200).json();
+  } else {
+    res.status(404).json();
+  }
+
+  res.status(200).json();
+});
+
 router.put("/:id", (req, res) => {
   const albumlist = db.albumlists.getAlbumlistByName(decodeId(req.params.id));
 
