@@ -2,6 +2,8 @@ import "./Scanner.css";
 import { h } from "preact";
 import { useState, useContext } from "preact/hooks";
 import { Config, Status } from "../../App";
+import { Button } from "../../Components/Button/Button";
+import { StatusText } from "../../Components/StatusText/StatusText";
 
 const Scanner = () => {
   const { config, setConfig } = useContext(Config);
@@ -51,41 +53,42 @@ const Scanner = () => {
   return (
     <div class="scanner">
       <div class="status">
-        <p>Scanner status: {status?.scanner ? status.scanner : "-"}</p>
+        <StatusText text={status?.scanner}></StatusText>
       </div>
 
       <h3>Folders</h3>
       <ul>
-        {config.folders.map((f) => (
+        {config?.folders.map((f) => (
           <li class="folder">
             <span>{f}</span>
-            <button
+            <Button
               disabled={status?.scanner === "Running"}
               onClick={() => onRemove(f)}
             >
               X
-            </button>
+            </Button>
           </li>
         ))}
       </ul>
 
       <footer>
-        <button
+        <Button
           disabled={
             loading ||
-            config.folders.length === 0 ||
+            config?.folders.length === 0 ||
             status?.scanner === "Running"
           }
           onClick={onScan}
         >
           Start Scan
-        </button>
-        <button
+        </Button>
+
+        <Button
           disabled={loading || status?.scanner === "Running"}
           onClick={onAdd}
         >
           Add Folder
-        </button>
+        </Button>
       </footer>
     </div>
   );

@@ -2,6 +2,8 @@ import "./Server.css";
 import { h } from "preact";
 import { useState, useEffect, useContext } from "preact/hooks";
 import { Config, Status } from "../../App";
+import { Button } from "../../Components/Button/Button";
+import { StatusText } from "../../Components/StatusText/StatusText";
 
 const Server = () => {
   const { config, setConfig } = useContext(Config);
@@ -39,7 +41,7 @@ const Server = () => {
   return (
     <div class="server">
       <div class="status">
-        <p>Server status: {status ? status.server : ""}</p>
+        <StatusText text={status?.server}></StatusText>
       </div>
 
       <div class="host">
@@ -55,16 +57,16 @@ const Server = () => {
       </div>
 
       <footer>
-        <button
+        <Button
           disabled={loading || status?.server === "Running"}
           onClick={onRestart}
         >
           Start Server
-        </button>
+        </Button>
 
-        <button disabled={!isConfigChanged || loading} onClick={onSave}>
+        <Button disabled={!isConfigChanged || loading} onClick={onSave}>
           Save Changes {status?.server === "Running" ? "& Restart" : ""}
-        </button>
+        </Button>
       </footer>
     </div>
   );
