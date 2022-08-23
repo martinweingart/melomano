@@ -1,10 +1,11 @@
 import "./Tracklist.scss";
 import React, { Fragment, useContext } from "react";
-import { MdClose, MdPlaylistAdd } from "react-icons/md";
+import { MdClose, MdPlaylistAdd, MdDownload } from "react-icons/md";
 import clsx from "clsx";
 import { Divider, IconButton } from "../../Components";
 import { ContextPlayer } from "../../Context/ContextPlayer";
-import { getDuration } from "../../Helpers";
+import { download, getDuration } from "../../Helpers";
+import { getTrackUrl } from "../../Services/media";
 
 export const Tracklist = function ({
   className = "",
@@ -13,6 +14,10 @@ export const Tracklist = function ({
   onRemove,
 }) {
   const { addTrack } = useContext(ContextPlayer);
+
+  const onDownload = (track) => {
+    download(getTrackUrl(track.id));
+  };
 
   return (
     <ul className={clsx("Tracklist", className)}>
@@ -30,17 +35,23 @@ export const Tracklist = function ({
               </div>
             </div>
 
-            {onAddToPlaylist && (
-              <IconButton size={16} onClick={() => onAddToPlaylist(track)}>
-                <MdPlaylistAdd />
-              </IconButton>
-            )}
+            <div className="Tracklist-actions">
+              {onAddToPlaylist && (
+                <IconButton size={16} onClick={() => onAddToPlaylist(track)}>
+                  <MdPlaylistAdd />
+                </IconButton>
+              )}
 
-            {onRemove && (
-              <IconButton size={16} onClick={() => onRemove(track, index)}>
-                <MdClose />
+              {onRemove && (
+                <IconButton size={16} onClick={() => onRemove(track, index)}>
+                  <MdClose />
+                </IconButton>
+              )}
+
+              <IconButton size={16} onClick={() => onDownload(track)}>
+                <MdDownload />
               </IconButton>
-            )}
+            </div>
           </li>
 
           {index < tracks.length - 1 && <Divider />}

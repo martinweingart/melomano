@@ -7,6 +7,7 @@ import {
   MdPlaylistAdd,
   MdAlbum,
   MdQueueMusic,
+  MdDownload,
 } from "react-icons/md";
 import noAlbum from "../../Images/album.jpg";
 import { getImageUrl } from "../../Services/media";
@@ -16,8 +17,10 @@ import {
   getTracksByAlbum,
   addToPlaylist,
   addToAlbumlist,
+  getDownloadAlbumUrl,
 } from "../../Services/api";
 import { ContextPlayer } from "../../Context/ContextPlayer";
+import { download } from "../../Helpers";
 
 export const AlbumHeader = function ({
   className,
@@ -53,6 +56,10 @@ export const AlbumHeader = function ({
     } else {
       await addToAlbumlist(name, id);
     }
+  };
+
+  const onDownload = () => {
+    download(getDownloadAlbumUrl(id));
   };
 
   return (
@@ -123,6 +130,10 @@ export const AlbumHeader = function ({
             }}
           >
             <MdAlbum />
+          </IconButton>
+
+          <IconButton size={16} onClick={onDownload}>
+            <MdDownload />
           </IconButton>
         </div>
       </div>

@@ -1,5 +1,7 @@
 const joi = require("joi");
 const express = require("express");
+const zip = require("express-zip");
+
 const router = express.Router();
 const db = require("../../db");
 const { validateQuery } = require("../../utils");
@@ -44,6 +46,19 @@ router.get("/:id", (req, res) => {
 
 router.get("/:id/tracks", (req, res) => {
   res.json(db.files.getTracksByAlbum(req.params.id));
+});
+
+router.get("/:id/download", (req, res) => {
+  const album = db.files.getAlbumById(req.params.id);
+  const files = album.tracks.map((track) => ({
+    path: track.filepath,
+    name: track.filepath.substring(
+      track.filepath.lastIndexOf("/"),
+      track.filepath.length
+    ),
+  }));
+
+  res.zip(files, `${album.name}.zip`);
 });
 
 module.exports = router;

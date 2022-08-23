@@ -45,7 +45,7 @@ export const GenresView = function () {
     error,
     fetchNextPage,
     hasNextPage,
-    isFetching,
+    isLoading,
     isFetchingNextPage,
   } = useInfiniteQuery(
     ["genres", { filter }],
@@ -82,7 +82,8 @@ export const GenresView = function () {
       />
 
       <ListView
-        loading={isFetching || isFetchingNextPage}
+        loading={isLoading}
+        loadingMore={isFetchingNextPage}
         list={list}
         type="avatar"
         title="name"

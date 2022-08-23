@@ -7,6 +7,7 @@ import clsx from "clsx";
 export const ListView = function ({
   list,
   loading,
+  loadingMore,
   filter,
   onFilter,
   ...props
@@ -28,13 +29,15 @@ export const ListView = function ({
         </p>
       )}
 
-      <ListRender
-        className={clsx("ListView-list", {
-          hide: loading || list.length === 0,
-        })}
-        list={list || []}
-        {...props}
-      />
+      {list.length > 0 && (
+        <ListRender className="ListView-list" list={list} {...props} />
+      )}
+
+      {loadingMore && (
+        <div className="loadingMore">
+          <Spinner size={16} />
+        </div>
+      )}
     </div>
   );
 };

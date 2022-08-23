@@ -1,7 +1,7 @@
 .ListView {
   height: 100%;
   display: grid;
-  grid-template-rows: 40px 1fr;
+  grid-template-rows: auto 1fr auto;
 
   .empty,
   .loading {
@@ -18,5 +18,9 @@
     &.hide {
       display: none;
     }
+  }
+
+  .loadingMore {
+    padding: 8px 0;
   }
 }

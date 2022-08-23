@@ -17,7 +17,9 @@ import {
   addToPlaylist,
   addToAlbumlist,
   getTracksByGenre,
+  getDownloadAlbumUrl,
 } from "../../../Services/api";
+import { download } from "../../../Helpers";
 
 export const GenreView = function () {
   const navigate = useNavigate();
@@ -68,6 +70,10 @@ export const GenreView = function () {
     addTracks(tracks);
   };
 
+  const onDownloadAlbum = (id) => {
+    download(getDownloadAlbumUrl(id));
+  };
+
   return (
     <div className={clsx("GenreView", { isLoading })}>
       {isLoading && <Spinner size={32} />}
@@ -101,6 +107,7 @@ export const GenreView = function () {
             onQueue={onQueueAlbum}
             onAddToPlaylist={(id) => onOpenListModal("playlist", id)}
             onAddToAlbumlist={(id) => onOpenListModal("albumlist", id)}
+            onDownload={(id) => onDownloadAlbum(id)}
           />
         </Fragment>
       )}

@@ -15,7 +15,9 @@ import {
   getArtist,
   getTracksByArtist,
   getTracksByAlbum,
+  getDownloadAlbumUrl,
 } from "../../../Services/api";
+import { download } from "../../../Helpers";
 
 export const ArtistView = function () {
   const navigate = useNavigate();
@@ -67,6 +69,10 @@ export const ArtistView = function () {
     }
   };
 
+  const onDownloadAlbum = (id) => {
+    download(getDownloadAlbumUrl(id));
+  };
+
   return (
     <div className={clsx("ArtistView", { isLoading })}>
       {isLoading && <Spinner size={32} />}
@@ -100,6 +106,7 @@ export const ArtistView = function () {
             onQueue={onQueueAlbum}
             onAddToPlaylist={(id) => onOpenListModal("playlist", id)}
             onAddToAlbumlist={(id) => onOpenListModal("albumlist", id)}
+            onDownload={(id) => onDownloadAlbum(id)}
           />
         </Fragment>
       )}

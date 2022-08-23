@@ -46,7 +46,7 @@ export const ArtistsView = function () {
     error,
     fetchNextPage,
     hasNextPage,
-    isFetching,
+    isLoading,
     isFetchingNextPage,
   } = useInfiniteQuery(
     ["artists", { filter }],
@@ -83,7 +83,8 @@ export const ArtistsView = function () {
         onSave={onAddToPlaylist}
       />
       <ListView
-        loading={isFetching || isFetchingNextPage}
+        loading={isLoading}
+        loadingMore={isFetchingNextPage}
         list={list}
         type="avatar"
         title="name"

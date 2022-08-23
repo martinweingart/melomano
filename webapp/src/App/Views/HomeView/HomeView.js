@@ -16,6 +16,7 @@ import {
 } from "../../../Components";
 import * as api from "../../../Services/api";
 import { ContextPlayer } from "../../../Context/ContextPlayer";
+import { download } from "../../../Helpers";
 
 export const HomeView = function () {
   const navigate = useNavigate();
@@ -66,6 +67,10 @@ export const HomeView = function () {
     }
   };
 
+  const onDownloadAlbum = (id) => {
+    download(api.getDownloadAlbumUrl(id));
+  };
+
   return (
     <Fragment>
       <AddListModal
@@ -101,6 +106,7 @@ export const HomeView = function () {
                 onQueue={onQueue}
                 onAddToPlaylist={(id) => onOpenListModal("playlist", id)}
                 onAddToAlbumlist={(id) => onOpenListModal("albumlist", id)}
+                onDownload={(id) => onDownloadAlbum(id)}
               />
             </div>
           </Fragment>

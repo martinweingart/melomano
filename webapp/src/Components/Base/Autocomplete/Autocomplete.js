@@ -4,12 +4,21 @@ import { Divider } from "../Divider/Divider";
 
 export function Autocomplete({ value, options, onChange }) {
   const optionsFiltered = options.filter((o) => {
-    return value.length < o.length && o.toLowerCase().indexOf(value) !== -1;
+    return (
+      value.length < o.length &&
+      o.toLowerCase().indexOf(value.toLowerCase()) !== -1
+    );
   });
 
   return (
     <div className="Autocomplete">
-      <input value={value} onChange={(e) => onChange(e.target.value)} />
+      <input
+        autocorrect="off"
+        autocapitalize="none"
+        autocomplete="off"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
       {value.length > 0 && optionsFiltered.length > 0 && (
         <ul className="options">
           {optionsFiltered.map((o, i) => (

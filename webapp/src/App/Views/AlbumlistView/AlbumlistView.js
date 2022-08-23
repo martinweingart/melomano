@@ -13,7 +13,9 @@ import {
   getAlbumlist,
   removeAlbumlist,
   updateAlbumlist,
+  getDownloadAlbumUrl,
 } from "../../../Services/api";
+import { download } from "../../../Helpers";
 
 export const AlbumlistView = function () {
   const queryClient = useQueryClient();
@@ -40,6 +42,10 @@ export const AlbumlistView = function () {
     queryClient.setQueryData(["albumlist", params.id], newAlbumlist);
   };
 
+  const onDownloadAlbum = (id) => {
+    download(getDownloadAlbumUrl(id));
+  };
+
   return (
     <div className={clsx("AlbumlistView", { isLoading })}>
       {isLoading && <Spinner size={32} />}
@@ -62,6 +68,7 @@ export const AlbumlistView = function () {
             subtitle="artist"
             onOpen={(id) => navigate(`/album/${id}`)}
             onRemove={onRemoveAlbum}
+            onDownload={(id) => onDownloadAlbum(id)}
           />
         </Fragment>
       )}

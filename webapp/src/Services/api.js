@@ -28,6 +28,10 @@ export async function getAlbum(id) {
   return response.json();
 }
 
+export function getDownloadAlbumUrl(id) {
+  return `${API_URL}/albums/${id}/download`;
+}
+
 export async function getRecent() {
   const response = await fetch(`${API_URL}/albums/recent`);
   return response.json();

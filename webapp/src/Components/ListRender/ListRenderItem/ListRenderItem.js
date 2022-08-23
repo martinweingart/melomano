@@ -8,6 +8,7 @@ import {
   MdAlbum,
   MdClose,
   MdQueueMusic,
+  MdDownload,
 } from "react-icons/md";
 import noAlbum from "../../../Images/album.jpg";
 import { Avatar, IconButton } from "../../Base";
@@ -24,6 +25,7 @@ export function ListRenderItem({
   onAddToPlaylist,
   onAddToAlbumlist,
   onRemove,
+  onDownload,
 }) {
   const isAvatar = type === "avatar";
 
@@ -75,6 +77,12 @@ export function ListRenderItem({
           {onRemove && (
             <IconButton size={16} onClick={() => onRemove(id)}>
               <MdClose />
+            </IconButton>
+          )}
+
+          {onDownload && (
+            <IconButton size={16} onClick={() => onDownload(id)}>
+              <MdDownload />
             </IconButton>
           )}
         </div>

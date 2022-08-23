@@ -15,3 +15,14 @@ export function getRandomNum(min, max) {
 export function removeItemFromList(list, index) {
   return [...list.slice(0, index), ...list.slice(index + 1, list.length)];
 }
+
+export function download(url) {
+  const a = document.createElement("a");
+  a.style.display = "none";
+  a.href = url;
+  a.target = "_blank";
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(a.href);
+  document.body.removeChild(a);
+}

@@ -15,7 +15,7 @@ export const ListRender = function ({
 }) {
   const onScroll = (e) => {
     const { scrollHeight, scrollTop, clientHeight } = e.target;
-    if (scrollHeight - scrollTop === clientHeight) {
+    if (Math.round(scrollHeight - scrollTop) === Math.round(clientHeight)) {
       onScrollBottom && onScrollBottom();
     }
   };

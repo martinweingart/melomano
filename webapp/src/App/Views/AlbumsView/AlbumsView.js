@@ -10,6 +10,7 @@ import {
   addToPlaylist,
   addToAlbumlist,
 } from "../../../Services/api";
+import { download } from "../../../Helpers";
 
 export const AlbumsView = function () {
   const navigate = useNavigate();
@@ -59,12 +60,16 @@ export const AlbumsView = function () {
     }
   };
 
+  const onDownload = (id) => {
+    download(getDownloadAlbumUrl(id));
+  };
+
   const {
     data,
     error,
     fetchNextPage,
     hasNextPage,
-    isFetching,
+    isLoading,
     isFetchingNextPage,
   } = useInfiniteQuery(
     ["albums", { filter }],
@@ -101,7 +106,8 @@ export const AlbumsView = function () {
       />
 
       <ListView
-        loading={isFetching || isFetchingNextPage}
+        loading={isLoading}
+        loadingMore={isFetchingNextPage}
         list={list}
         type="box"
         title="name"
@@ -114,6 +120,7 @@ export const AlbumsView = function () {
         onPlay={onPlay}
         onAddToPlaylist={(id) => onOpenListModal("playlist", id)}
         onAddToAlbumlist={(id) => onOpenListModal("albumlist", id)}
+        onDownload={(id) => onDownload(id)}
       />
     </Fragment>
   );
