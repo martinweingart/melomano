@@ -1,5 +1,5 @@
-const { readConfig } = require("../shared/config");
-const server = require("../src/server");
+const { readConfig } = require("../../shared/config");
+const server = require("../../src/server");
 
 (async function main() {
   process.send("Starting");

@@ -1,5 +1,5 @@
-const { readConfig } = require("../shared/config");
-const { start } = require("../src/scanner");
+const { readConfig } = require("../../shared/config");
+const { start } = require("../../src/scanner");
 
 (async function () {
   let status = "Starting";

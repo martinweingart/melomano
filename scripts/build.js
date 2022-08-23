@@ -59,6 +59,11 @@ async function main() {
     path.join(buildDir, "electron/favicon.ico")
   );
 
+  await fsExtra.copy(
+    path.join(__dirname, "../electron/scripts"),
+    path.join(buildDir, "electron/scripts")
+  );
+
   execSync("npm i", {
     cwd: path.join(__dirname, "../electron/render"),
   });
