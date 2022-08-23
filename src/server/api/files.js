@@ -84,11 +84,27 @@ router.post("/add", async (req, res) => {
 router.post("/clean", async (req, res) => {
   const scanId = req.body.scanId;
   const filesCollection = db.getCollection("files");
+  const playlistsCollection = db.getCollection("playlists");
+  const albumlistsCollection = db.getCollection("albumlists");
 
   filesCollection
     .chain()
     .find({ scan_id: { $ne: scanId } })
     .remove();
+
+  const playlists = playlistsCollection.find();
+  for (let playlist of playlists) {
+    playlist.tracks = playlist.tracks.filter((t) => t.scan_id === scanId);
+    playlistsCollection.update(playlist);
+  }
+
+  const albumlists = albumlistsCollection.find();
+  for (let albumlist of albumlists) {
+    albumlist.albums = albumlist.albums.filter(
+      (a) => db.files.getAlbumById(a.id) !== null
+    );
+    albumlistsCollection.update(albumlist);
+  }
 
   db.save();
 
