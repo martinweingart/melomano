@@ -43,7 +43,7 @@ router.post("/add", async (req, res) => {
     filepath: { $eq: filePath },
   });
 
-  if (!fileDB || fileDB.mtime != mtime) {
+  if (!fileDB || fileDB.mtime != mtime || !fileDB.album_art_filename) {
     try {
       const { picture, ...data } = await parseFile(filePath);
 
@@ -94,16 +94,26 @@ router.post("/clean", async (req, res) => {
 
   const playlists = playlistsCollection.find();
   for (let playlist of playlists) {
-    playlist.tracks = playlist.tracks.filter((t) => t.scan_id === scanId);
+    playlist.tracks = playlist.tracks.filter(
+      (t) => db.files.getTrackById(t.id) !== null
+    );
     playlistsCollection.update(playlist);
+
+    if (!playlist.tracks || playlist.tracks.length === 0) {
+      playlistsCollection.remove(playlist.$loki);
+    }
   }
 
   const albumlists = albumlistsCollection.find();
   for (let albumlist of albumlists) {
     albumlist.albums = albumlist.albums.filter(
-      (a) => db.files.getAlbumById(a.id) !== null
+      (id) => id && db.files.getAlbumById(id) !== null
     );
     albumlistsCollection.update(albumlist);
+
+    if (!albumlist.albums || albumlist.albums.length === 0) {
+      albumlistsCollection.remove(albumlist.$loki);
+    }
   }
 
   db.save();
