@@ -9,7 +9,7 @@ export const AlbumlistsView = function () {
   const queryClient = useQueryClient();
   const [filter, setFilter] = useState("");
 
-  const { isLoading, data } = useQuery(["albumlists", filter], () =>
+  const { isLoading, data } = useQuery(["albumlists"], () =>
     getAlbumlists({ filter })
   );
 
@@ -21,7 +21,7 @@ export const AlbumlistsView = function () {
   return (
     <ListView
       loading={isLoading}
-      list={data}
+      list={data || []}
       type="avatar"
       title="name"
       filter={filter}

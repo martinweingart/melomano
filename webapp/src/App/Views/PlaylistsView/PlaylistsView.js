@@ -37,7 +37,7 @@ export const PlaylistsView = function () {
   return (
     <ListView
       loading={isLoading}
-      list={data}
+      list={data || []}
       type="avatar"
       title="name"
       filter={filter}
