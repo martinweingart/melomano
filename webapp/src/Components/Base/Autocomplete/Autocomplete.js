@@ -13,9 +13,9 @@ export function Autocomplete({ value, options, onChange }) {
   return (
     <div className="Autocomplete">
       <input
-        autocorrect="off"
-        autocapitalize="none"
-        autocomplete="off"
+        autoCorrect="off"
+        autoCapitalize="none"
+        autoComplete="off"
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
