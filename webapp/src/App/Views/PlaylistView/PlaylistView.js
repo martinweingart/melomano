@@ -50,6 +50,7 @@ export const PlaylistView = function () {
           <Tracklist
             className="list"
             tracks={playlist.tracks}
+            numberType="order"
             onRemove={onRemoveTrack}
           />
         </Fragment>

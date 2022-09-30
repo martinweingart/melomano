@@ -10,6 +10,7 @@ import { getTrackUrl } from "../../Services/media";
 export const Tracklist = function ({
   className = "",
   tracks,
+  numberType = "track",
   onAddToPlaylist,
   onRemove,
 }) {
@@ -28,7 +29,9 @@ export const Tracklist = function ({
               className="Tracklist-item-info"
               onClick={() => addTrack(track)}
             >
-              <div className="Tracklist-item-number">{track.track}</div>
+              <div className="Tracklist-item-number">
+                {numberType === "track" ? track.track : index + 1}
+              </div>
               <div className="Tracklist-item-title">{track.title}</div>
               <div className="Tracklist-item-duration">
                 {getDuration(track.duration)}
