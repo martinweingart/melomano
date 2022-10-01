@@ -6,6 +6,7 @@ const {
   getAlbumId,
   getRandomNum,
   encodeName,
+  escapeRegex,
 } = require("../../utils");
 
 module.exports.getArtists = function (query) {
@@ -21,7 +22,7 @@ module.exports.getArtists = function (query) {
 
   if (query) {
     if (query.qname) {
-      dbQueryObj.artist = { $regex: [query.qname, "i"] };
+      dbQueryObj.artist = { $regex: [escapeRegex(query.qname), "i"] };
     }
   }
 
@@ -50,7 +51,7 @@ module.exports.getArtistByName = function (name) {
   if (!filesCollection) return null;
 
   const results = filesCollection.find({
-    artist: { $regex: [`^${name}$`, "i"] },
+    artist: { $regex: [`^${escapeRegex(name)}$`, "i"] },
   });
 
   const albums = {};
@@ -90,10 +91,10 @@ module.exports.getAlbums = function (query) {
 
   if (query) {
     if (query.qname) {
-      dbQueryObj.album = { $regex: [query.qname, "i"] };
+      dbQueryObj.album = { $regex: [escapeRegex(query.qname), "i"] };
     }
     if (query.artist) {
-      dbQueryObj.artist = { $regex: [`^${query.artist}$`, "i"] };
+      dbQueryObj.artist = { $regex: [`^${escapeRegex(query.artist)}$`, "i"] };
     }
   }
 
@@ -137,8 +138,8 @@ module.exports.getAlbumById = function (id) {
   const albumObj = getAlbumDataFromId(id);
 
   const results = filesCollection.find({
-    album: { $regex: [`^${albumObj.name}$`, "i"] },
-    artist: { $regex: [`^${albumObj.artist}$`, "i"] },
+    album: { $regex: [`^${escapeRegex(albumObj.name)}$`, "i"] },
+    artist: { $regex: [`^${escapeRegex(albumObj.artist)}$`, "i"] },
   });
 
   if (!results || results.length === 0) return null;
@@ -299,7 +300,7 @@ module.exports.getTracksByArtist = function (artistName) {
   if (!filesCollection) return [];
 
   const results = filesCollection.find({
-    artist: { $regex: [`^${artistName}$`, "i"] },
+    artist: { $regex: [`^${escapeRegex(artistName)}$`, "i"] },
   });
 
   return getTracksWithId(results);
@@ -315,8 +316,8 @@ module.exports.getTracksByAlbum = function (albumId) {
   const results = filesCollection
     .chain()
     .find({
-      album: { $regex: [`^${albumObj.name}$`, "i"] },
-      artist: { $regex: [`^${albumObj.artist}$`, "i"] },
+      album: { $regex: [`^${escapeRegex(albumObj.name)}$`, "i"] },
+      artist: { $regex: [`^${escapeRegex(albumObj.artist)}$`, "i"] },
     })
     .simplesort("track")
     .data();

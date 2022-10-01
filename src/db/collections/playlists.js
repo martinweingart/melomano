@@ -1,5 +1,5 @@
 const db = require("../index");
-const { encodeName } = require("../../utils");
+const { encodeName, escapeRegex } = require("../../utils");
 
 module.exports.getPlaylists = function (query) {
   const playlistsCollection = db.getCollection("playlists");
@@ -10,7 +10,7 @@ module.exports.getPlaylists = function (query) {
 
   if (query) {
     if (query.qname) {
-      dbQueryObj.name = { $regex: [query.qname, "i"] };
+      dbQueryObj.name = { $regex: [escapeRegex(query.qname), "i"] };
     }
   }
 

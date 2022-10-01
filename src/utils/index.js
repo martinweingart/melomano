@@ -59,3 +59,7 @@ module.exports.decodeId = function (id) {
   const removePadding = id.replace(/\%3D/g, "");
   return decodeURIComponent(Buffer.from(removePadding, "base64").toString());
 };
+
+module.exports.escapeRegex = function (string) {
+  return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+};
