@@ -33,13 +33,17 @@ export const AlbumlistView = function () {
   };
 
   const onRemoveAlbum = async (id) => {
-    const albums = albumlist.albums.filter((a) => a.id !== id).map((a) => a.id);
-    const newAlbumlist = {
+    const albums = albumlist.albums.filter((a) => a.id !== id);
+
+    await updateAlbumlist(params.id, {
+      name: albumlist.name,
+      albums: albums.map((a) => a.id),
+    });
+
+    queryClient.setQueryData(["albumlist", params.id], {
       name: albumlist.name,
       albums,
-    };
-    await updateAlbumlist(params.id, newAlbumlist);
-    queryClient.setQueryData(["albumlist", params.id], newAlbumlist);
+    });
   };
 
   const onDownloadAlbum = (id) => {
