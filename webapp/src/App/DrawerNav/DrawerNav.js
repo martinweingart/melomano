@@ -22,6 +22,10 @@ const links = [
     to: "/genres",
   },
   {
+    label: "Folders",
+    to: "/folders",
+  },
+  {
     label: "Playlists",
     to: "/playlists",
   },

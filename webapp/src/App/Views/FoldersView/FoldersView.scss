@@ -1,0 +1,29 @@
+.FoldersView {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 40px 1fr;
+
+  .isLoading {
+    margin: 0;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .FoldersView-header {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .FoldersView-list {
+    padding: 0 12px;
+    box-sizing: border-box;
+    overflow: auto;
+
+    &.hide {
+      display: none;
+    }
+  }
+}

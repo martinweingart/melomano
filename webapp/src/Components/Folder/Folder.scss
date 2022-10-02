@@ -1,0 +1,16 @@
+.Folder {
+  cursor: pointer;
+  .item {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+
+  .files {
+    list-style: none;
+
+    > li {
+      padding: 4px 0;
+    }
+  }
+}

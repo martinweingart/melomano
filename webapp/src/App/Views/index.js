@@ -9,3 +9,4 @@ export { PlaylistsView } from "./PlaylistsView/PlaylistsView";
 export { PlaylistView } from "./PlaylistView/PlaylistView";
 export { AlbumlistsView } from "./AlbumlistsView/AlbumlistsView";
 export { AlbumlistView } from "./AlbumlistView/AlbumlistView";
+export { FoldersView } from "./FoldersView/FoldersView";
