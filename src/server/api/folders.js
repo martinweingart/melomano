@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../../db");
-const { isExtensionValid } = require("../../utils");
+const { encodeName } = require("../../utils");
 
 function getTree(files) {
   const tree = {};
@@ -12,18 +12,19 @@ function getTree(files) {
     let folderPath = "";
     let sub = tree;
     let prev;
+    let i = 0;
 
     for (let part of parts) {
       folderPath += `${part}/`;
 
-      if (part.indexOf(".mp3") !== -1) {
-        prev.files = [...(prev.files || []), file];
+      if (i === parts.length - 1) {
+        prev.files = [...(prev.files || []), { ...file, id: file.$loki }];
         break;
       }
 
       if (!sub[part]) {
         sub[part] = {
-          id: folderPath.substring(0, folderPath.length - 1),
+          id: encodeName(folderPath.substring(0, folderPath.length - 1)),
           files: [],
         };
 
@@ -32,10 +33,15 @@ function getTree(files) {
 
       prev = sub[part];
       sub = sub[part].folders;
+      i++;
     }
   }
 
-  return tree;
+  return {
+    root: {
+      folders: tree,
+    },
+  };
 }
 
 router.get("/", (req, res) => {
