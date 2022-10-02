@@ -1,0 +1,37 @@
+.scanner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.scanner .status {
+  display: flex;
+  padding-top: 24px;
+  justify-content: space-between;
+}
+
+.scanner .status > p {
+  margin: 0;
+}
+
+.scanner ul {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+}
+
+.scanner ul li {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+}
+
+.scanner ul li span {
+  flex: 1;
+}
+
+.scanner footer {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,25 @@
+.Portal {
+  .Portal-backdrop {
+    visibility: hidden;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.5);
+    transition: opacity var(--transition-speed) ease,
+      visibility var(--transition-speed) ease;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  &.isOpen {
+    .Portal-backdrop {
+      visibility: visible;
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 999;
+    }
+  }
+}

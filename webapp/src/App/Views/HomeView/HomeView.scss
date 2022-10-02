@@ -1,0 +1,49 @@
+@import "../../../Styles/colors.scss";
+
+.HomeView {
+  height: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 12px;
+
+  &.isLoading {
+    grid-template-rows: 1fr;
+    align-items: center;
+  }
+
+  .HomeView-header {
+    padding: 6px;
+    border-bottom: 1px solid $colors-border-light;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    > h4 {
+      margin: 0;
+      font-weight: 400;
+      font-size: 12px;
+      font-style: italic;
+    }
+  }
+
+  .HomeView-recent {
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-height: 0;
+    gap: 2px;
+
+    > h3 {
+      margin: 0 12px;
+      padding-bottom: 2px;
+      font-weight: 500;
+      font-size: 14px;
+      border-bottom: 1px solid $colors-border-light;
+    }
+
+    .HomeView-recent-list {
+      overflow: auto;
+    }
+  }
+}

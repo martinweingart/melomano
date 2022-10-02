@@ -1,0 +1,23 @@
+@import "../../../Styles/colors.scss";
+
+.DrawerNavLink {
+  cursor: pointer;
+  list-style: none;
+  padding: 6px 12px;
+  box-sizing: border-box;
+  color: $colors-main-light;
+  -webkit-tap-highlight-color: transparent;
+
+  &.isSelected {
+    border-left: 4px solid $colors-drawer-selected;
+    background-color: $colors-drawer-selected-bg;
+    border-radius: 5px;
+  }
+
+  &:active,
+  &:hover {
+    border-left: 4px solid $colors-drawer-hover;
+    background-color: $colors-drawer-hover-bg;
+    border-radius: 5px;
+  }
+}

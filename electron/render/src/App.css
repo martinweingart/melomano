@@ -1,0 +1,12 @@
+.App {
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.App > div {
+  flex: 1;
+  padding: 56px 20px;
+  box-sizing: border-box;
+  overflow: auto;
+}

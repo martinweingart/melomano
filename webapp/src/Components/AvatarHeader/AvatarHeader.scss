@@ -1,0 +1,20 @@
+.AvatarHeader {
+  display: flex;
+  gap: 5px;
+
+  .AvatarHeader-content {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 12px;
+    align-items: center;
+
+    .AvatarHeader-name {
+      font-weight: 600;
+    }
+  }
+
+  > button {
+    align-self: flex-end;
+  }
+}

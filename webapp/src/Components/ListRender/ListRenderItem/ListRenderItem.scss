@@ -1,0 +1,63 @@
+@import "../../../Styles/colors.scss";
+
+.ListRenderItem {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  padding: 12px;
+  gap: 12px;
+  border-bottom: 0.5px solid $colors-border-light;
+  box-sizing: border-box;
+
+  > img {
+    width: 100px;
+    height: 100px;
+  }
+
+  &:last-child {
+    border: 0;
+  }
+
+  .ListRenderItem-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+
+    .ListRenderItem-info {
+      display: flex;
+      flex-direction: column;
+
+      .ListRenderItem-title {
+        font-weight: 600;
+      }
+
+      .ListRenderItem-subtitle {
+        color: $colors-main-dark;
+        font-size: 85%;
+      }
+    }
+
+    .ListRenderItem-controls {
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
+  }
+
+  &.isAvatar {
+    grid-template-columns: 48px 1fr;
+    gap: 16px;
+    align-items: center;
+
+    .ListRenderItem-content {
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+
+      .ListRenderItem-info {
+        flex: 1;
+      }
+    }
+  }
+}

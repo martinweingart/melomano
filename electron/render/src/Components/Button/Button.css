@@ -1,0 +1,21 @@
+.Button {
+  color: #f2f2f2;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: 2px;
+  background: #3f5466;
+  cursor: pointer;
+}
+
+.Button:hover {
+  background-color: rgba(46, 64, 80, 0.5);
+}
+
+.Button:active {
+  background-color: #2e4050;
+}
+
+.Button:disabled {
+  border: 0;
+  background-color: #c7ccd1;
+}

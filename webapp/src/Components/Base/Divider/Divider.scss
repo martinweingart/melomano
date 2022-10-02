@@ -1,0 +1,7 @@
+@import "../../../Styles/colors.scss";
+
+.Divider {
+  border: 0;
+  margin: 0;
+  border-bottom: 1px solid $colors-border-light;
+}

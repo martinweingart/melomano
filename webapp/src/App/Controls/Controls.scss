@@ -1,0 +1,13 @@
+@import "../../Styles/colors.scss";
+
+.Controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: $colors-bg-dark-1;
+  padding: 0 6px;
+
+  > div {
+    display: flex;
+  }
+}

@@ -1,0 +1,23 @@
+@import "../../../Styles/colors.scss";
+
+@keyframes spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.Spinner {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+
+  .Spinner-loading {
+    border: 2px solid $colors-main-light;
+    border-top: 2px solid $colors-main-dark;
+    border-radius: 50%;
+    animation: spinner 0.5s linear infinite;
+  }
+}

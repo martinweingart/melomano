@@ -1,0 +1,16 @@
+@import "../../Styles/colors.scss";
+
+.StatusBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+  color: $colors-bg-dark-1;
+  font-size: 14px;
+  font-weight: 700;
+  font-style: italic;
+
+  &.isEmpty {
+    background-color: $colors-bg-dark-3;
+  }
+}

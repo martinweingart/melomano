@@ -1,0 +1,5 @@
+@import "../../../Styles/Mixins/ItemView.scss";
+
+.AlbumView {
+  @include itemView;
+}

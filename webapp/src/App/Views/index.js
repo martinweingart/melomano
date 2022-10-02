@@ -1,0 +1,11 @@
+export { HomeView } from "./HomeView/HomeView";
+export { ArtistsView } from "./ArtistsView/ArtistsView";
+export { ArtistView } from "./ArtistView/ArtistView";
+export { AlbumsView } from "./AlbumsView/AlbumsView";
+export { AlbumView } from "./AlbumView/AlbumView";
+export { GenresView } from "./GenresView/GenresView";
+export { GenreView } from "./GenreView/GenreView";
+export { PlaylistsView } from "./PlaylistsView/PlaylistsView";
+export { PlaylistView } from "./PlaylistView/PlaylistView";
+export { AlbumlistsView } from "./AlbumlistsView/AlbumlistsView";
+export { AlbumlistView } from "./AlbumlistView/AlbumlistView";

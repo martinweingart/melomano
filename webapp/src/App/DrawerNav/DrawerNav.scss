@@ -1,0 +1,20 @@
+@import "../../Styles/colors.scss";
+
+.DrawerNav-content {
+  height: 100%;
+  background-color: $colors-bg-dark-1;
+  padding: 8px;
+  box-sizing: border-box;
+
+  .DrawerNav-header {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .DrawerNav-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 24px;
+  }
+}

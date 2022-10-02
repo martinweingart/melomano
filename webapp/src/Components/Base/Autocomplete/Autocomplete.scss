@@ -1,0 +1,52 @@
+@import "../../../Styles/colors.scss";
+
+.Autocomplete {
+  position: relative;
+
+  > input {
+    background-color: transparent;
+    padding: 5px;
+    font-family: inherit;
+    line-height: 1.15;
+    margin: 0;
+    border: 0;
+    border-bottom: 1px solid rgba($color: $colors-border-dark, $alpha: 0.5);
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+
+    &:focus-visible {
+      z-index: 1;
+      border-color: $colors-border-dark;
+    }
+  }
+
+  .options {
+    position: absolute;
+    z-index: 3;
+    list-style-type: none;
+    padding: 8px 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background-color: $colors-bg-light-1;
+    width: 100%;
+    overflow: auto;
+    font-size: 12px;
+    border: 0.5px solid rgba($color: $colors-border-dark, $alpha: 0.2);
+    margin-top: 2px;
+
+    > li {
+      cursor: pointer;
+      padding: 12px;
+      box-sizing: border-box;
+
+      &:hover {
+        background-color: $colors-light-hover;
+      }
+
+      &:active {
+        background-color: $colors-light-active;
+      }
+    }
+  }
+}

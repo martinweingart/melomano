@@ -1,0 +1,26 @@
+.ListView {
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+
+  .empty,
+  .loading {
+    margin: 0;
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .ListView-list {
+    overflow: auto;
+
+    &.hide {
+      display: none;
+    }
+  }
+
+  .loadingMore {
+    padding: 8px 0;
+  }
+}
