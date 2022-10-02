@@ -192,3 +192,9 @@ export function removeAlbumlist(id) {
     method: "DELETE",
   });
 }
+
+export async function getFolders() {
+  const response = await fetch(`${API_URL}/folders`);
+  if (response.status === 404) return Promise.resolve();
+  return response.json();
+}

@@ -19,6 +19,7 @@ import {
   PlaylistView,
   AlbumlistsView,
   AlbumlistView,
+  FoldersView,
 } from "./Views";
 import { ContextPlayerProvider } from "../Context/ContextPlayer";
 
@@ -62,6 +63,7 @@ function App() {
                 <Route path="genre/:id" element={<GenreView />} />
                 <Route path="playlist/:id" element={<PlaylistView />} />
                 <Route path="albumlist/:id" element={<AlbumlistView />} />
+                <Route path="folders/" element={<FoldersView />} />
               </Routes>
             </div>
 
