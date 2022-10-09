@@ -1,8 +1,9 @@
 import "./AlbumlistView.scss";
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
 import clsx from "clsx";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { ContextPlayer } from "../../../Context/ContextPlayer";
 import {
   AvatarHeader,
   Divider,
@@ -14,6 +15,7 @@ import {
   removeAlbumlist,
   updateAlbumlist,
   getDownloadAlbumUrl,
+  getTracksByAlbum,
 } from "../../../Services/api";
 import { download } from "../../../Helpers";
 
@@ -21,11 +23,22 @@ export const AlbumlistView = function () {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const params = useParams();
+  const { addTracksAndPlay, addTracks } = useContext(ContextPlayer);
 
   const { isLoading, data: albumlist } = useQuery(
     ["albumlist", params.id],
     () => getAlbumlist(params.id)
   );
+
+  const onPlay = async (id) => {
+    const tracks = await getTracksByAlbum(id);
+    addTracksAndPlay(tracks);
+  };
+
+  const onQueue = async (id) => {
+    const tracks = await getTracksByAlbum(id);
+    addTracks(tracks);
+  };
 
   const onRemove = async () => {
     await removeAlbumlist(params.id);
@@ -71,6 +84,8 @@ export const AlbumlistView = function () {
             title="name"
             subtitle="artist"
             onOpen={(id) => navigate(`/album/${id}`)}
+            onQueue={onQueue}
+            onPlay={onPlay}
             onRemove={onRemoveAlbum}
             onDownload={(id) => onDownloadAlbum(id)}
           />
