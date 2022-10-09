@@ -1,5 +1,6 @@
 import "./ListRender.scss";
 import React from "react";
+import clsx from "clsx";
 import { ListRenderItem } from "./ListRenderItem/ListRenderItem";
 import { getImageUrl } from "../../Services/media";
 
@@ -21,7 +22,7 @@ export const ListRender = function ({
   };
 
   return (
-    <div className={className} onScroll={onScroll}>
+    <div className={clsx("ListRender", className)} onScroll={onScroll}>
       <ul>
         {list.map((item) => (
           <ListRenderItem

@@ -5,6 +5,7 @@
   flex-direction: column;
   height: 100%;
   gap: 6px;
+  user-select: none;
 
   &.isLoading {
     height: 100%;

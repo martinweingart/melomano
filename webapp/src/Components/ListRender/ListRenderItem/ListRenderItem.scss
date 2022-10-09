@@ -23,6 +23,7 @@
     flex-direction: column;
     flex: 1;
     justify-content: space-between;
+    user-select: none;
 
     .ListRenderItem-info {
       display: flex;

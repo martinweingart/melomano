@@ -1,5 +1,7 @@
 .Folder {
   cursor: pointer;
+  user-select: none;
+
   .item {
     display: flex;
     gap: 6px;
