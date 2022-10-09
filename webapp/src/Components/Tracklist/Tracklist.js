@@ -1,10 +1,15 @@
 import "./Tracklist.scss";
 import React, { Fragment, useContext } from "react";
-import { MdClose, MdPlaylistAdd, MdDownload } from "react-icons/md";
 import clsx from "clsx";
+import {
+  MdClose,
+  MdPlaylistAdd,
+  MdDownload,
+  MdOutlineFormatColorText,
+} from "react-icons/md";
 import { Divider, IconButton } from "../../Components";
 import { ContextPlayer } from "../../Context/ContextPlayer";
-import { download, getDuration } from "../../Helpers";
+import { download, getDuration, openGoogleSearch } from "../../Helpers";
 import { getTrackUrl } from "../../Services/media";
 
 export const Tracklist = function ({
@@ -15,6 +20,10 @@ export const Tracklist = function ({
   onRemove,
 }) {
   const { addTrack } = useContext(ContextPlayer);
+
+  const onFindLyrics = (track) => {
+    openGoogleSearch(`${track.artist} ${track.title} lyrics`);
+  };
 
   const onDownload = (track) => {
     download(getTrackUrl(track.id));
@@ -50,6 +59,10 @@ export const Tracklist = function ({
                   <MdClose />
                 </IconButton>
               )}
+
+              <IconButton size={16} onClick={() => onFindLyrics(track)}>
+                <MdOutlineFormatColorText />
+              </IconButton>
 
               <IconButton size={16} onClick={() => onDownload(track)}>
                 <MdDownload />

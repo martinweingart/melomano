@@ -9,6 +9,7 @@ import {
   MdClose,
   MdQueueMusic,
   MdDownload,
+  MdOutlineFormatColorText,
 } from "react-icons/md";
 import noAlbum from "../../../Images/album.jpg";
 import { Avatar, IconButton } from "../../Base";
@@ -26,6 +27,7 @@ export function ListRenderItem({
   onAddToAlbumlist,
   onRemove,
   onDownload,
+  onFindLyrics,
 }) {
   const isAvatar = type === "avatar";
 

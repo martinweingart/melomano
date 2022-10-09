@@ -26,3 +26,7 @@ export function download(url) {
   window.URL.revokeObjectURL(a.href);
   document.body.removeChild(a);
 }
+
+export function openGoogleSearch(query) {
+  window.open("http://google.com/search?q=" + query);
+}
