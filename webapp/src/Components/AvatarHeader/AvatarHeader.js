@@ -12,7 +12,6 @@ import { IconButton, Avatar } from "../Base";
 export const AvatarHeader = function ({
   className,
   name,
-  onOpen,
   onPlay,
   onQueue,
   onRemove,
@@ -24,12 +23,6 @@ export const AvatarHeader = function ({
 
         <span className="AvatarHeader-name">{name}</span>
       </div>
-
-      {onOpen && (
-        <IconButton label="Open" size={16} fontSize={10} onClick={onOpen}>
-          <MdArrowForward />
-        </IconButton>
-      )}
 
       {onPlay && (
         <IconButton label="Play" size={16} fontSize={10} onClick={onPlay}>

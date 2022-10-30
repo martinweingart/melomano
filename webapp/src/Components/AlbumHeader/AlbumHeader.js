@@ -2,11 +2,11 @@ import "./AlbumHeader.scss";
 import React, { Fragment, useContext, useState } from "react";
 import clsx from "clsx";
 import {
-  MdArrowForward,
   MdOutlinePlayCircleOutline,
   MdPlaylistAdd,
   MdAlbum,
   MdQueueMusic,
+  MdOutlineFormatColorText,
   MdDownload,
 } from "react-icons/md";
 import noAlbum from "../../Images/album.jpg";
@@ -20,7 +20,7 @@ import {
   getDownloadAlbumUrl,
 } from "../../Services/api";
 import { ContextPlayer } from "../../Context/ContextPlayer";
-import { download } from "../../Helpers";
+import { download, openGoogleSearch } from "../../Helpers";
 
 export const AlbumHeader = function ({
   className,
@@ -58,6 +58,10 @@ export const AlbumHeader = function ({
     }
   };
 
+  const onFindLyrics = () => {
+    openGoogleSearch(`${artist} ${name} lyrics`);
+  };
+
   const onDownload = () => {
     download(getDownloadAlbumUrl(id));
   };
@@ -72,7 +76,7 @@ export const AlbumHeader = function ({
       />
 
       <div className={clsx("AlbumHeader", className)}>
-        <div className="AlbumHeader-content">
+        <div className="AlbumHeader-content" onClick={onOpen}>
           <img src={getImageUrl(image) || noAlbum} alt={name} />
 
           <div className="AlbumHeader-info">
@@ -87,13 +91,7 @@ export const AlbumHeader = function ({
         </div>
 
         <div className="AlbumHeader-controls">
-          {onOpen && (
-            <IconButton label="Open" size={16} fontSize={10} onClick={onOpen}>
-              <MdArrowForward />
-            </IconButton>
-          )}
-
-          <IconButton label="Play" size={16} fontSize={10} onClick={onPlay}>
+          <IconButton size={16} onClick={onPlay}>
             <MdOutlinePlayCircleOutline />
           </IconButton>
 
@@ -130,6 +128,15 @@ export const AlbumHeader = function ({
             }}
           >
             <MdAlbum />
+          </IconButton>
+
+          <IconButton
+            label="Search lyrics"
+            size={16}
+            fontSize={10}
+            onClick={onFindLyrics}
+          >
+            <MdOutlineFormatColorText />
           </IconButton>
 
           <IconButton size={16} onClick={onDownload}>
